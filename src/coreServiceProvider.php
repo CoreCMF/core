@@ -3,7 +3,6 @@
 namespace CoreCMF\core;
 
 use Illuminate\Support\ServiceProvider;
-use CoreCMF\core\Builder\Main;
 
 class coreServiceProvider extends ServiceProvider
 {
@@ -24,8 +23,5 @@ class coreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('builderMain', function () {
-            return new Main();
-        });
     }
 }
