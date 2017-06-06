@@ -9,6 +9,7 @@ use Artisan;
  */
 trait Install
 {
+
     public function dumpAutoload()
     {
         $this->info('dumpAutoload');
@@ -18,6 +19,11 @@ trait Install
     {
         $this->info('migrate');
         Artisan::call('migrate');
+    }
+		public function dumpAutoload()
+    {
+        $this->info('composer dump-autoload');
+        Artisan::call('composer dump-autoload');
     }
     public function publish($value)
     {
