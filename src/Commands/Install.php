@@ -9,6 +9,10 @@ use Artisan;
  */
 trait Install
 {
+    public function dumpAutoload()
+    {
+        $this->info('dumpAutoload');
+    }
 	public function migrate()
     {
         $this->info('migrate');
