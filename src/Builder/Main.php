@@ -5,10 +5,11 @@ namespace CoreCMF\core\Builder;
 class Main
 {
     public $data;
-
+    
     private $routes = [];
     private $config;
     private $apiUrl;
+    private $topNavs;
     /**
      * Create a new Skeleton Instance
      */
@@ -36,7 +37,22 @@ class Main
     public function routes($routes){
         return $this->routes = array_merge($this->routes, $routes);
     }
-
+    /**
+     * [topNav 设置顶部导航]
+     * @param    [type]                   $topNav [顶部导航配置数据]
+     * @return   [type]                           [description]
+     */
+    public function topNav($topNav){
+        return $this->topNavs[] = $topNav;
+    }
+    /**
+     * [getTopNavs 获取顶部导航 并进行排序]
+     * @return   [type]                   [description]
+     */
+    public function getTopNavs(){
+        $topNavs = collect($this->topNavs)->sortBy('sort');
+        return $topNavs->values()->all();
+    }
     /**
      * [config 前端主要配置参数]
      * @param    [type]                   $key   [配置名称]
