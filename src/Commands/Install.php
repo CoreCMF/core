@@ -12,6 +12,7 @@ trait Install
     public function dumpAutoload()
     {
         $this->info('dumpAutoload');
+        exec('composer dumpautoload');
     }
 	public function migrate()
     {
