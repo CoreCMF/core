@@ -5,7 +5,7 @@ namespace CoreCMF\core\Builder;
 class Main
 {
     public $data;
-    
+
     private $routes = [];
     private $config;
     private $apiUrl;
@@ -38,20 +38,29 @@ class Main
         return $this->routes = array_merge($this->routes, $routes);
     }
     /**
+     * [topNavDefaultActive top 导航默认激活菜单名]
+     * @param  [type] $defaultActive [name]
+     * @return [type]                [description]
+     */
+    public function topNavDefaultActive($defaultActive){
+        return $this->topNavs['defaultActive'] = $defaultActive;
+    }
+    /**
      * [topNav 设置顶部导航]
      * @param    [type]                   $topNav [顶部导航配置数据]
      * @return   [type]                           [description]
      */
-    public function topNav($topNav){
-        return $this->topNavs[] = $topNav;
+    public function topNavList($topNav){
+        return $this->topNavs['list'][] = $topNav;
     }
     /**
-     * [getTopNavs 获取顶部导航 并进行排序]
+     * [getTopNavs 获取顶部导航 并根据sort进行排序]
      * @return   [type]                   [description]
      */
     public function getTopNavs(){
-        $topNavs = collect($this->topNavs)->sortBy('sort');
-        return $topNavs->values()->all();
+        $topNavsList = collect($this->topNavs['list'])->sortBy('sort')->values()->all();
+        $this->topNavs['list'] = $topNavsList;
+        return $this->topNavs;
     }
     /**
      * [config 前端主要配置参数]
