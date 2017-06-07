@@ -51,14 +51,14 @@ class Main
      * @return   [type]                           [description]
      */
     public function topNavList($topNav){
-        return $this->topNavs['list'][] = $topNav;
+        return $this->topNavs['list'][$topNav['name']] = $topNav;
     }
     /**
      * [getTopNavs 获取顶部导航 并根据sort进行排序]
      * @return   [type]                   [description]
      */
     public function getTopNavs(){
-        $topNavsList = collect($this->topNavs['list'])->sortBy('sort')->values()->all();
+        $topNavsList = collect($this->topNavs['list'])->sortBy('sort');
         $this->topNavs['list'] = $topNavsList;
         return $this->topNavs;
     }
