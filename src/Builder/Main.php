@@ -39,28 +39,20 @@ class Main
         return $this->routes = array_merge($this->routes, $routes);
     }
     /**
-     * [topNavDefaultActive top 导航默认激活菜单名]
-     * @param  [type] $defaultActive [name]
-     * @return [type]                [description]
-     */
-    public function topNavDefaultActive($defaultActive){
-        return $this->topNavs['defaultActive'] = $defaultActive;
-    }
-    /**
      * [topNav 设置顶部导航]
      * @param    [type]                   $topNav [顶部导航配置数据]
      * @return   [type]                           [description]
      */
-    public function addTopNavList($topNav){
-        return $this->topNavs['list'][$topNav['name']] = $topNav;
+    public function addTopNav($topNav){
+        return $this->topNavs[$topNav['name']] = $topNav;
     }
     /**
      * [getTopNavs 获取顶部导航 并根据sort进行排序]
      * @return   [type]                   [description]
      */
     public function getTopNavs(){
-        $topNavsList = collect($this->topNavs['list'])->sortBy('sort');
-        $this->topNavs['list'] = $topNavsList;
+        $topNavs = collect($this->topNavs)->sortBy('sort');
+        $this->topNavs = $topNavs;
         return $this->topNavs;
     }
     /**
