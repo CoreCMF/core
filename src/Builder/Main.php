@@ -69,7 +69,6 @@ class Main
     public function setMenus($menus){
         $menus = $menus->map(function ($menu) {
             $menu->path = $menu->value;
-            $menu->apiUrl = $menu->apiUrl;
             return $menu;
         })->filter(function ($menu, $key) use($menus) {
             if ($menu->pid == 0) {
