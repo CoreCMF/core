@@ -122,9 +122,6 @@ class Main
 
     /**
      * [response 数据处理返回]
-     * @author BigRocs
-     * @email    bigrocs@qq.com
-     * @DateTime 2017-05-20T10:11:40+0800
      * @return   [type]                   [description]
      */
     public function response()
