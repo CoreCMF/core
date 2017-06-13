@@ -4,6 +4,7 @@ namespace CoreCMF\core\Builder;
 
 class Form
 {
+  private $type = 'form';
   private $data;
   private $apiUrl;
   private $config;
@@ -20,7 +21,8 @@ class Form
    * @return [type]       [description]
    */
   public function data($data){
-      return $this->data = $data;
+      $this->data = $data;
+      return $this;
   }
   /**
    * [apiUrl 设置 apiUrl API通信网址]
@@ -28,14 +30,24 @@ class Form
    * @param [type] $ApiUrl [通信网址]
    */
   public function apiUrl($key, $ApiUrl){
-      return $this->apiUrl[$key] = $ApiUrl;
+      $this->apiUrl[$key] = $ApiUrl;
+      return $this;
   }
   /**
    * [config 配置参数]
    * @param  [type] $config [配置参数]
    */
-  public function config($config){
-      return $this->config = $config;
+  public function config($key, $value){
+      $this->config[$key] = $value;
+      return $this;
+  }
+  /**
+   * [tabs description]
+   * @param  [type] $tabs [description]
+   */
+  public function tabs($tabs){
+      $this->tabs   = $tabs;
+      return $this;
   }
   /**
    * [response 数据处理返回]
@@ -43,7 +55,9 @@ class Form
    */
   public function response()
   {
+      $this->response['type'] = $this->type;
       $this->response['data'] = $this->data;
+      $this->response['tabs']   = $this->tabs;
       $this->response['apiUrl'] = $this->apiUrl;
       $this->response['config'] = $this->config;
       return $this->response;

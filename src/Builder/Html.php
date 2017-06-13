@@ -7,18 +7,22 @@ use CoreCMF\core\Builder\Table;
 
 class Html
 {
-  /** @var form */
-  public $form;
-  public $table;
-
+  private $items;
   private $title;
   private $tabs;
   private $response;
 
   public function __construct()
   {
-    $this->form = new Form();
-    $this->table = new Table();
+  }
+  /**
+   * [item html项目]
+   * @param  [type] $item [description]
+   * @return [type]       [description]
+   */
+  public function item($item){
+      $this->items[] = $item->response();
+      return $this;
   }
   /**
    * [title 设置页面标题]
@@ -26,14 +30,8 @@ class Html
    * @return [type]        [description]
    */
   public function title($title){
-      return $this->title   = $title;
-  }
-  /**
-   * [tabs description]
-   * @param  [type] $tabs [description]
-   */
-  public function tabs($tabs){
-      return $this->tabs   = $tabs;
+      $this->title   = $title;
+      return $this;
   }
   /**
    * [response 数据处理返回]
@@ -41,9 +39,8 @@ class Html
    */
   public function response()
   {
-      $this->response['title'] = $this->title;
-      $this->response['tabs'] = $this->tabs;
-      $this->response['form'] = $this->form->response();
+      $this->response['title']  = $this->title;
+      $this->response['items']   = $this->items;
 
       return $this->response;
   }
