@@ -9,6 +9,10 @@ use CoreCMF\core\Builder\Table as builderTable;
 
 class coreServiceProvider extends ServiceProvider
 {
+    protected $commands = [
+        'CoreCMF\core\Commands\InstallCommand',
+        'CoreCMF\core\Commands\UninstallCommand',
+    ];
     /**
      * Perform post-registration booting of services.
      *
@@ -16,7 +20,10 @@ class coreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //加载artisan commands
+        $this->commands($this->commands);
+        //迁移文件配置
+        $this->loadMigrationsFrom(__DIR__.'/../databases/migrations');
     }
 
     /**
