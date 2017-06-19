@@ -9,6 +9,7 @@ class Html
 {
   private $items;
   private $title;
+  private $config;
   private $tabs;
   private $response;
 
@@ -22,6 +23,15 @@ class Html
    */
   public function item($item){
       $this->items[] = $item->response();
+      return $this;
+  }
+  /**
+   * [item html项目]
+   * @param  [type] $item [description]
+   * @return [type]       [description]
+   */
+  public function itemConfig($key,$value){
+      $this->config[$key] = $value;
       return $this;
   }
   /**
@@ -41,6 +51,7 @@ class Html
   {
       $this->response['title']  = $this->title;
       $this->response['items']   = $this->items;
+      $this->response['config']  = $this->config;
 
       return $this->response;
   }
