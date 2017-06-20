@@ -5,6 +5,7 @@ namespace CoreCMF\core\Builder;
 class Table
 {
   private $type = 'table';
+  private $stripe = true;
   private $column;
   private $topButton;
   private $rightButton;
@@ -50,6 +51,10 @@ class Table
       $this->rightButton[]   = $rightButton;   //设置 table rightButton 表格右侧按钮
       return $this;
   }
+  public function closeStripe($column){
+      $this->stripe = false;   //关闭斑马线显示
+      return $this;
+  }
   /**
    * [response 数据处理返回]
    * @return   [type]                   [输出后的form数据]
@@ -57,6 +62,7 @@ class Table
   public function response()
   {
       $this->response['type']       = $this->type;
+      $this->response['stripe']     = $this->stripe;
       $this->response['tabs']       = $this->tabs;
       $this->response['tabsGroup']  = $this->tabsGroup;
       $this->response['data']       = $this->data;
