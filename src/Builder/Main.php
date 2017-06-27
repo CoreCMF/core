@@ -24,10 +24,17 @@ class Main
      * @param    [type]                   $path   [前端路由路径]
      * @param    [type]                   $name   [前端路由名称]
      * @param    [type]                   $apiUrl [路由API通信地址]
+     * @param    [type]                   $children [子路由]
      * @return   [type]                           [description]
      */
-    public function route($path,$name,$apiUrl){
-        return $this->routes[] = ['path'=>$path, 'name'=>$name, 'apiUrl'=>$apiUrl];
+    public function route($array){
+        return $this->routes[] = [
+          'path'    =>$array['path'],
+          'name'    =>$array['name'],
+          'apiUrl'  =>$array['apiUrl'],
+          'children'=>$array['children'],
+          'component'=>$array['component'],
+        ];
     }
 
     /**
@@ -37,6 +44,17 @@ class Main
      */
     public function routes($routes){
         return $this->routes = array_merge($this->routes, $routes);
+    }
+    /**
+     * [setRouteComponent 批量设置路由 $component]
+     * @param [type] $routes    [description]
+     * @param [type] $component [description]
+     */
+    public function setRouteComponent($routes,$component){
+        foreach ($routes as $key => &$route) {
+            $route['component'] = $component;
+        }
+        return $routes;
     }
     /**
      * [topNav 设置顶部导航]
