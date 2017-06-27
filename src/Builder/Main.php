@@ -31,9 +31,9 @@ class Main
         return $this->routes[] = [
           'path'    =>$array['path'],
           'name'    =>$array['name'],
-          'apiUrl'  =>$array['apiUrl'],
+          'meta'    =>[ 'apiUrl' => $array['apiUrl'] ],
           'children'=>$array['children'],
-          'component'=>$array['component'],
+          'component'=>[ 'template'=> $array['component'] ],
         ];
     }
 
@@ -52,7 +52,7 @@ class Main
      */
     public function setRouteComponent($routes,$component){
         foreach ($routes as $key => &$route) {
-            $route['component'] = $component;
+            $route['component'] = [ 'template'=> $component ];
         }
         return $routes;
     }
