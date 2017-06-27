@@ -37,5 +37,8 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->migrate();
+        $this->publish('seeds');
+        $this->dumpAutoload();
+        $this->seed('CoreUserTableSeeder');
     }
 }
