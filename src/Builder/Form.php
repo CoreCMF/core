@@ -102,7 +102,7 @@ class Form
       return $this;
   }
   public function rules($rules){
-    $this->$rules = $rules;
+    $this->rules = $rules;
     return $this;
   }
   /**
