@@ -8,6 +8,7 @@ class Form
   private $data;
   private $apiUrl;
   private $config;
+  private $rules;
   private $tabs;
   private $tabsGroup;
   private $response;
@@ -100,6 +101,10 @@ class Form
       $this->config[$key] = $value;
       return $this;
   }
+  public function rules($rules){
+    $this->$rules = $rules;
+    return $this;
+  }
   /**
    * [tabs description]
    */
@@ -126,6 +131,8 @@ class Form
       $this->response['data']       = $this->data;
       $this->response['apiUrl']     = $this->apiUrl;
       $this->response['config']     = $this->config;
+      $this->response['rules']      = $this->rules;
+
       return $this->response;
   }
 }
