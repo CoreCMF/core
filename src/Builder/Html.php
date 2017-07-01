@@ -11,7 +11,6 @@ class Html
   private $title;
   private $config;
   private $tabs;
-  private $response;
 
   public function __construct()
   {
@@ -49,10 +48,10 @@ class Html
    */
   public function response()
   {
-      $this->response['title']  = $this->title;
-      $this->response['items']   = $this->items;
-      $this->response['config']  = $this->config;
+      $response['title']  = $this->title;
+      $response['items']   = $this->items;
+      $response['config']  = $this->config;
 
-      return $this->response;
+      return $response;
   }
 }

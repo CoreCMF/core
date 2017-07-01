@@ -9,7 +9,7 @@ class Table
   private $column;
   private $topButton;
   private $rightButton;
-  private $response;
+  private $pagination;
   /**
    * Create a new Skeleton Instance
    */
@@ -47,12 +47,19 @@ class Table
       $this->topButton[]   = $topButton;   //设置 table rightButton 表格右侧按钮
       return $this;
   }
-  public function rightButton($rightButton){
+  public function rightButton($rightButton) {
       $this->rightButton[]   = $rightButton;   //设置 table rightButton 表格右侧按钮
       return $this;
   }
-  public function closeStripe($column){
+  public function closeStripe($column) {
       $this->stripe = false;   //关闭斑马线显示
+      return $this;
+  }
+  public function pagination($pagination) {
+      if(empty($pagination['layout'])){
+          $pagination['layout'] = 'total, sizes, prev, pager, next, jumper';
+      }
+      $this->pagination = $pagination;
       return $this;
   }
   /**
@@ -61,16 +68,16 @@ class Table
    */
   public function response()
   {
-      $this->response['type']       = $this->type;
-      $this->response['stripe']     = $this->stripe;
-      $this->response['tabs']       = $this->tabs;
-      $this->response['tabsGroup']  = $this->tabsGroup;
-      $this->response['data']       = $this->data;
-      $this->response['column']     = $this->column;
-      $this->response['topButton']  = $this->topButton;
-      $this->response['rightButton']= $this->rightButton;
-      // $this->response['apiUrl']     = $this->apiUrl;
-      // $this->response['config']     = $this->config;
-      return $this->response;
+      $response['type']       = $this->type;
+      $response['stripe']     = $this->stripe;
+      $response['tabs']       = $this->tabs;
+      $response['tabsGroup']  = $this->tabsGroup;
+      $response['data']       = $this->data;
+      $response['column']     = $this->column;
+      $response['topButton']  = $this->topButton;
+      $response['rightButton']= $this->rightButton;
+      $response['pagination'] = $this->pagination;
+      
+      return $response;
   }
 }
