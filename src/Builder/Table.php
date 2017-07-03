@@ -10,6 +10,8 @@ class Table
   private $topButton;
   private $rightButton;
   private $pagination;
+  private $searchTitle;
+  private $searchSelect;
   /**
    * Create a new Skeleton Instance
    */
@@ -62,6 +64,14 @@ class Table
       $this->pagination = $pagination;
       return $this;
   }
+  public function searchTitle($title) {
+      $this->searchTitle = $title;
+      return $this;
+  }
+  public function searchSelect($select) {
+      $this->searchSelect = $select;
+      return $this;
+  }
   /**
    * [response 数据处理返回]
    * @return   [type]                   [输出后的form数据]
@@ -77,7 +87,8 @@ class Table
       $response['topButton']  = $this->topButton;
       $response['rightButton']= $this->rightButton;
       $response['pagination'] = $this->pagination;
-      
+      $response['search']['title'] = $this->searchTitle;
+      $response['search']['select'] = $this->searchSelect;
       return $response;
   }
 }
