@@ -8,7 +8,11 @@ use CoreCMF\core\Commands\Install;
 
 class InstallCommand extends Command
 {
-    use Install;
+    /**
+     *  install class.
+     * @var object
+     */
+    protected $install;
     /**
      * The name and signature of the console command.
      *
@@ -24,9 +28,16 @@ class InstallCommand extends Command
      */
     protected $description = 'core packages install';
 
-    public function __construct()
+    private $providers = [
+        'JeroenG\Packager\PackagerServiceProvider::class',  //包开发
+        'Laravel\Passport\PassportServiceProvider::class',  //api管理
+        'Zizaco\Entrust\EntrustServiceProvider::class',     //权限管理
+    ];
+
+    public function __construct(Install $install)
     {
         parent::__construct();
+        $this->install = $install;
     }
 
     /**
@@ -36,9 +47,17 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->migrate();
-        $this->publish('seeds');
-        $this->dumpAutoload();
-        $this->seed('CoreUserTableSeeder');
+        $this->installationService();
+        $this->install->migrate();
+        $this->install->publish('seeds');
+        $this->install->dumpAutoload();
+        $this->install->seed('CoreUserTableSeeder');
+    }
+    /**
+     * [installationService 安装相关依赖服务]
+     */
+    public function installationService()
+    {
+        $this->install->installProviders($this->providers);
     }
 }
