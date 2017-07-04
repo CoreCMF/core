@@ -23,7 +23,7 @@ class coreServiceProvider extends ServiceProvider
         //加载artisan commands
         $this->commands($this->commands);
         // 加载配置
-        $this->mergeConfigFrom(__DIR__.'/Config/config.php', 'entrust');
+        $this->mergeConfigFrom(__DIR__.'/Config/entrust.php', 'entrust');
         //迁移文件配置
         $this->loadMigrationsFrom(__DIR__.'/../databases/migrations');
         //发布seed填充文件
