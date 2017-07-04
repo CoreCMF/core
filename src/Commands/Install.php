@@ -5,7 +5,7 @@ namespace CoreCMF\core\Commands;
 use JeroenG\Packager\PackagerHelper;
 use Artisan;
 /**
- * trait install
+ * class install
  * @package CoreCMF\core\Commands
  */
 class Install

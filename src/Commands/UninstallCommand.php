@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use CoreCMF\core\Commands\Uninstall;
 class UninstallCommand extends Command
 {
-    use Uninstall;
+    protected $uninstall;
     /**
      * The name and signature of the console command.
      *
@@ -23,9 +23,10 @@ class UninstallCommand extends Command
      */
     protected $description = 'core packages uninstall';
 
-    public function __construct()
+    public function __construct(Uninstall $uninstall)
     {
         parent::__construct();
+        $this->uninstall = $uninstall;
     }
 
     /**
@@ -36,6 +37,16 @@ class UninstallCommand extends Command
     public function handle()
     {
         //删除对应数据库数据
-        $this->dropTable('core_uploads');
+        $this->info($this->uninstall->dropTable('entrust_permission_role'));
+        $this->info($this->uninstall->dropTable('entrust_permissions'));
+        $this->info($this->uninstall->dropTable('entrust_role_user'));
+        $this->info($this->uninstall->dropTable('entrust_roles'));
+        // $this->info($this->uninstall->dropTable('core_uploads'));
+        // $this->info($this->uninstall->dropTable('core_uploads'));
+        // $this->info($this->uninstall->dropTable('core_uploads'));
+        // $this->info($this->uninstall->dropTable('core_uploads'));
+        // $this->info($this->uninstall->dropTable('core_uploads'));
+        $this->info($this->uninstall->dropTable('core_uploads'));
+        $this->info($this->uninstall->dropTable('core_users'));
     }
 }
