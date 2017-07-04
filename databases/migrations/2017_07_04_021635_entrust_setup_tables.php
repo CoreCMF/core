@@ -29,7 +29,7 @@ class EntrustSetupTables extends Migration
 
             $table->foreign('user_id')->references('id')->on('core_users')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')
+            $table->foreign('role_id')->references('id')->on('entrust_roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['user_id', 'role_id']);
@@ -49,9 +49,9 @@ class EntrustSetupTables extends Migration
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
 
-            $table->foreign('permission_id')->references('id')->on('permissions')
+            $table->foreign('permission_id')->references('id')->on('entrust_permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')
+            $table->foreign('role_id')->references('id')->on('entrust_roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['permission_id', 'role_id']);
