@@ -1,6 +1,6 @@
 {
     "name": "CoreCMF/core",
-    "type": "packages",
+    "type": "CoreCMF-core",
     "description": "corecmf core",
     "keywords": [
         "CoreCMF",
@@ -17,7 +17,6 @@
         }
     ],
     "require": {
-        "composer/installers": "~1.0",
         "illuminate/support": "~5.1",
         "php" : "~5.6|~7.0"
     },
