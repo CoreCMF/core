@@ -3,12 +3,13 @@
 namespace CoreCMF\core\Models;
 
 use Laravel\Passport\HasApiTokens;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens,Notifiable;
+    use HasApiTokens,EntrustUserTrait,Notifiable;
 
     public $table = 'core_users';
 
