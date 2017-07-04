@@ -1,8 +1,8 @@
 <?php
 
 namespace CoreCMF\core\Commands;
-use JeroenG\Packager\PackagerHelper;
 
+use JeroenG\Packager\PackagerHelper;
 use Artisan;
 /**
  * trait install
@@ -27,35 +27,35 @@ class Install
     }
     public function dumpAutoload()
     {
-        $this->info('dumpAutoload');
         exec('composer dumpautoload');
+        return 'dumpAutoload';
     }
 	  public function migrate()
     {
-        $this->info('migrate');
         Artisan::call('migrate');
+        return 'migrate';
     }
     public function publish($value)
     {
-    	$this->info('vendor:publish --tag='.$value.' --force');
         Artisan::call('vendor:publish', [
             '--tag' => $value,'--force' => true
         ]);
+        return 'vendor:publish --tag='.$value.' --force';
     }
     public function seed($class)
     {
-        $this->info('db:seed --class='.$class);
         Artisan::call('db:seed', [
             '--class' => $class
         ]);
+        return 'db:seed --class='.$class;
     }
     public function installProviders($serviceProvider){
-        $appConfigLine = 'App\Providers\RouteServiceProvider::class,';
+        $appConfigLine = 'CoreCMF\core\coreServiceProvider::class,';
         foreach ($serviceProvider as $provider ) {
             $appConfigLine = $appConfigLine.'
         '.$provider.',';
         }
-        dd($this->helper);
-        // $this->helper->replaceAndSave(getcwd().'/config/app.php', 'App\Providers\RouteServiceProvider::class,', $appConfigLine);
+        $this->helper->replaceAndSave(getcwd().'/config/app.php', 'CoreCMF\core\coreServiceProvider::class,', $appConfigLine);
+        return 'installProviders';
     }
 }

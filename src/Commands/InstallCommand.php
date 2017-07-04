@@ -48,16 +48,16 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->installationService();
-        $this->install->migrate();
-        $this->install->publish('seeds');
-        $this->install->dumpAutoload();
-        $this->install->seed('CoreUserTableSeeder');
+        $this->info($this->install->migrate());
+        $this->info($this->install->publish('seeds'));
+        $this->info($this->install->dumpAutoload());
+        $this->info($this->install->seed('CoreUserTableSeeder'));
     }
     /**
      * [installationService 安装相关依赖服务]
      */
     public function installationService()
     {
-        $this->install->installProviders($this->providers);
+        $this->info($this->install->installProviders($this->providers));
     }
 }
