@@ -1,9 +1,9 @@
 <?php
 
-namespace CoreCMF\core\Builder;
+namespace CoreCMF\core\Support\Builder;
 
-use CoreCMF\core\Builder\Form;
-use CoreCMF\core\Builder\Table;
+use CoreCMF\core\Support\Builder\Form;
+use CoreCMF\core\Support\Builder\Table;
 
 class Html
 {

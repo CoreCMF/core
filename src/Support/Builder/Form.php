@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\core\Builder;
+namespace CoreCMF\core\Support\Builder;
 
 class Form
 {

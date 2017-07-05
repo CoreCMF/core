@@ -1,8 +1,7 @@
 <?php
 
-namespace CoreCMF\core\Commands;
+namespace CoreCMF\core\Support\Commands;
 
-use JeroenG\Packager\PackagerHelper;
 use Artisan;
 /**
  * class install
@@ -10,21 +9,6 @@ use Artisan;
  */
 class Install
 {
-    /**
-     * Packager helper class.
-     * @var object
-     */
-    public $helper;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(PackagerHelper $helper)
-    {
-        $this->helper = $helper;
-    }
     public function dumpAutoload()
     {
         shell_exec('composer dump-autoload');
