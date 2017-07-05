@@ -30,13 +30,4 @@ class Uninstall
         DB::table('migrations')->where('migration', 'like','%'.$name.'_table%')->delete();
 				return 'dropIfExists '. $name .' Table';
     }
-		public function providers($serviceProvider){
-				$appConfigLine = '';
-				foreach ($serviceProvider as $provider ) {
-						$appConfigLine = $appConfigLine.'
-        '.$provider.'::class,';
-				}
-				$this->helper->replaceAndSave(getcwd().'/config/app.php', $appConfigLine, '');
-				return 'UninstallProviders';
-		}
 }

@@ -49,13 +49,4 @@ class Install
         ]);
         return 'db:seed --class='.$class;
     }
-    public function providers($serviceProvider){
-        $replace = 'CoreCMF\core\coreServiceProvider::class,';
-        foreach ($serviceProvider as $provider ) {
-            $replace = $replace.'
-        '.$provider.'::class,';
-        }
-        $this->helper->replaceAndSave(getcwd().'/config/app.php', 'CoreCMF\core\coreServiceProvider::class,', $replace);
-        return 'installProviders';
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace CoreCMF\core;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use CoreCMF\core\Builder\Html as builderHtml;
 use CoreCMF\core\Builder\Form as builderForm;
@@ -20,6 +21,7 @@ class coreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);//mysql5.7一下适应
         //加载artisan commands
         $this->commands($this->commands);
         // 加载配置
@@ -31,6 +33,10 @@ class coreServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../databases/seeds/' => database_path('seeds')
         ], 'seeds');
+
+        //注册providers服务
+        $providers = config('core.providers');
+        $this->registerProviders($providers);
     }
 
     /**
@@ -49,5 +55,12 @@ class coreServiceProvider extends ServiceProvider
       $this->app->bind('builderTable', function () {
           return new builderTable();
       });
+    }
+
+    public function registerProviders(array $providers)
+    {
+        foreach ($providers as $provider) {
+            $this->app->register($provider);
+        }
     }
 }

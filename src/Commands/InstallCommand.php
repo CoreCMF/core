@@ -2,7 +2,6 @@
 
 namespace CoreCMF\core\Commands;
 
-use Artisan;
 use Illuminate\Console\Command;
 
 use CoreCMF\core\Commands\Install;
@@ -42,20 +41,11 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->installationService();
         $this->isntallPassport();
         $this->info($this->install->migrate());
         $this->info($this->install->publish('seeds'));
         $this->info($this->install->dumpAutoload());
         $this->info($this->install->seed('CoreUserTableSeeder'));
-    }
-    /**
-     * [installationService 安装相关依赖服务]
-     */
-    public function installationService()
-    {
-        $providers = config('core.providers');
-        $this->info($this->install->providers($providers));
     }
     /**
      * [isntallPassport 安装Passport API认证]
@@ -87,8 +77,6 @@ class InstallCommand extends Command
           getcwd().'/config/auth.php',
           $search,
           $replace
-        );·
-
-        Artisan::call('passport:install');
+        );
     }
 }
