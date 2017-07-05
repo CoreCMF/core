@@ -42,11 +42,11 @@ class UninstallCommand extends Command
         $this->info($this->uninstall->dropTable('entrust_permissions'));
         $this->info($this->uninstall->dropTable('entrust_role_user'));
         $this->info($this->uninstall->dropTable('entrust_roles'));
-        // $this->info($this->uninstall->dropTable('core_uploads'));
-        // $this->info($this->uninstall->dropTable('core_uploads'));
-        // $this->info($this->uninstall->dropTable('core_uploads'));
-        // $this->info($this->uninstall->dropTable('core_uploads'));
-        // $this->info($this->uninstall->dropTable('core_uploads'));
+        $this->info($this->uninstall->dropTable('oauth_auth_codes'));
+        $this->info($this->uninstall->dropTable('oauth_access_tokens'));
+        $this->info($this->uninstall->dropTable('oauth_refresh_tokens'));
+        $this->info($this->uninstall->dropTable('oauth_clients'));
+        $this->info($this->uninstall->dropTable('oauth_personal_access_clients'));
         $this->info($this->uninstall->dropTable('core_uploads'));
         $this->info($this->uninstall->dropTable('core_users'));
     }

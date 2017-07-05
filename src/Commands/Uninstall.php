@@ -28,7 +28,7 @@ class Uninstall
     {
         Schema::dropIfExists($name);
         DB::table('migrations')->where('migration', 'like','%'.$name.'_table%')->delete();
-				return 'dropIfExists'. $name .'Table';
+				return 'dropIfExists '. $name .' Table';
     }
 		public function providers($serviceProvider){
 				$appConfigLine = '';
