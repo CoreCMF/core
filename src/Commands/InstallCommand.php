@@ -54,5 +54,38 @@ class InstallCommand extends Command
     {
         $providers = config('core.providers');
         $this->info($this->install->providers($providers));
+        $this->isntallPassport();
+    }
+    /**
+     * [isntallPassport 安装Passport API认证]
+     * @return [type] [description]
+     */
+    public function isntallPassport()
+    {
+        $search = 'use Illuminate\Support\Facades\Gate;';
+        $replace = 'use Laravel\Passport\Passport;'."\r\n".
+        'use Illuminate\Support\Facades\Gate;';
+        $this->install->helper->replaceAndSave(
+          getcwd().'/app/Providers/AuthServiceProvider.php',
+          $search,
+          $replace
+        );
+
+        $search = '$this->registerPolicies();';
+        $replace = '$this->registerPolicies();
+        Passport::routes();';
+        $this->install->helper->replaceAndSave(
+          getcwd().'/app/Providers/AuthServiceProvider.php',
+          $search,
+          $replace
+        );
+
+        $search = "'driver' => 'token',";
+        $replace = "'driver' => 'passport',";
+        $this->install->helper->replaceAndSave(
+          getcwd().'/config/auth.php',
+          $search,
+          $replace
+        );
     }
 }

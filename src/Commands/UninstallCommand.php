@@ -54,5 +54,38 @@ class UninstallCommand extends Command
     {
         $providers = config('core.providers');
         $this->info($this->uninstall->providers($providers));
+        $this->unisntallPassport();
+    }
+    /**
+     * [isntallPassport 卸载Passport API认证]
+     * @return [type] [description]
+     */
+    public function unisntallPassport()
+    {
+        $replace = 'use Illuminate\Support\Facades\Gate;';
+        $search = 'use Laravel\Passport\Passport;'."\r\n".
+        'use Illuminate\Support\Facades\Gate;';
+        $this->uninstall->helper->replaceAndSave(
+          getcwd().'/app/Providers/AuthServiceProvider.php',
+          $search,
+          $replace
+        );
+
+        $replace = '$this->registerPolicies();';
+        $search = '$this->registerPolicies();
+        Passport::routes();';
+        $this->uninstall->helper->replaceAndSave(
+          getcwd().'/app/Providers/AuthServiceProvider.php',
+          $search,
+          $replace
+        );
+
+        $replace = "'driver' => 'token',";
+        $search = "'driver' => 'passport',";
+        $this->uninstall->helper->replaceAndSave(
+          getcwd().'/config/auth.php',
+          $search,
+          $replace
+        );
     }
 }

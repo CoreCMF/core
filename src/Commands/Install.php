@@ -14,7 +14,7 @@ class Install
      * Packager helper class.
      * @var object
      */
-    protected $helper;
+    public $helper;
 
     /**
      * Create a new command instance.
@@ -50,12 +50,12 @@ class Install
         return 'db:seed --class='.$class;
     }
     public function providers($serviceProvider){
-        $appConfigLine = 'CoreCMF\core\coreServiceProvider::class,';
+        $replace = 'CoreCMF\core\coreServiceProvider::class,';
         foreach ($serviceProvider as $provider ) {
-            $appConfigLine = $appConfigLine.'
+            $replace = $replace.'
         '.$provider.'::class,';
         }
-        $this->helper->replaceAndSave(getcwd().'/config/app.php', 'CoreCMF\core\coreServiceProvider::class,', $appConfigLine);
+        $this->helper->replaceAndSave(getcwd().'/config/app.php', 'CoreCMF\core\coreServiceProvider::class,', $replace);
         return 'installProviders';
     }
 }

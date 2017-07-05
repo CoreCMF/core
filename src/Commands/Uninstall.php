@@ -13,7 +13,7 @@ class Uninstall
 		 * Packager helper class.
 		 * @var object
 		 */
-		protected $helper;
+		public $helper;
 		/**
 		 * Create a new command instance.
 		 *
