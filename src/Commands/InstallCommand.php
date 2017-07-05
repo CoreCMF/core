@@ -4,7 +4,8 @@ namespace CoreCMF\core\Commands;
 
 use Illuminate\Console\Command;
 
-use CoreCMF\core\Commands\Install;
+use CoreCMF\core\Support\Files;
+use CoreCMF\core\Support\Commands\Install;
 
 class InstallCommand extends Command
 {
@@ -13,6 +14,7 @@ class InstallCommand extends Command
      * @var object
      */
     protected $install;
+    protected $files;
     /**
      * The name and signature of the console command.
      *
@@ -28,10 +30,11 @@ class InstallCommand extends Command
      */
     protected $description = 'core packages install';
 
-    public function __construct(Install $install)
+    public function __construct(Install $install,Files $files)
     {
         parent::__construct();
         $this->install = $install;
+        $this->files = $files;
     }
 
     /**
@@ -41,42 +44,9 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->isntallPassport();
         $this->info($this->install->migrate());
         $this->info($this->install->publish('seeds'));
         $this->info($this->install->dumpAutoload());
         $this->info($this->install->seed('CoreUserTableSeeder'));
-    }
-    /**
-     * [isntallPassport 安装Passport API认证]
-     * @return [type] [description]
-     */
-    public function isntallPassport()
-    {
-        $search = 'use Illuminate\Support\Facades\Gate;';
-        $replace = 'use Laravel\Passport\Passport;'."\r\n".
-        'use Illuminate\Support\Facades\Gate;';
-        $this->install->helper->replaceAndSave(
-          getcwd().'/app/Providers/AuthServiceProvider.php',
-          $search,
-          $replace
-        );
-
-        $search = '$this->registerPolicies();';
-        $replace = '$this->registerPolicies();
-        Passport::routes();';
-        $this->install->helper->replaceAndSave(
-          getcwd().'/app/Providers/AuthServiceProvider.php',
-          $search,
-          $replace
-        );
-
-        $search = "'driver' => 'token',";
-        $replace = "'driver' => 'passport',";
-        $this->install->helper->replaceAndSave(
-          getcwd().'/config/auth.php',
-          $search,
-          $replace
-        );
     }
 }

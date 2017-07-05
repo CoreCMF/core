@@ -4,9 +4,10 @@ namespace CoreCMF\core;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use CoreCMF\core\Builder\Html as builderHtml;
-use CoreCMF\core\Builder\Form as builderForm;
-use CoreCMF\core\Builder\Table as builderTable;
+use CoreCMF\core\Support\Builder\Html as builderHtml;
+use CoreCMF\core\Support\Builder\Form as builderForm;
+use CoreCMF\core\Support\Builder\Table as builderTable;
+use Laravel\Passport\Passport;
 
 class coreServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class coreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);//mysql5.7一下适应
+        Schema::defaultStringLength(191);//mysql5.7一下适应Support\
         //加载artisan commands
         $this->commands($this->commands);
         // 加载配置
@@ -37,6 +38,8 @@ class coreServiceProvider extends ServiceProvider
         //注册providers服务
         $providers = config('core.providers');
         $this->registerProviders($providers);
+        //注册Passport
+        $this->registerPassport();
     }
 
     /**
@@ -62,5 +65,13 @@ class coreServiceProvider extends ServiceProvider
         foreach ($providers as $provider) {
             $this->app->register($provider);
         }
+    }
+
+    public function registerPassport()
+    {
+        //注册api认证的路由
+        Passport::routes();
+        //修改auth api 驱动
+        config(['auth.guards.api.driver' => 'passport']);
     }
 }
