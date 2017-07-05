@@ -36,6 +36,7 @@ class UninstallCommand extends Command
      */
     public function handle()
     {
+        $this->uninstallationService();
         //删除对应数据库数据
         $this->info($this->uninstall->dropTable('entrust_permission_role'));
         $this->info($this->uninstall->dropTable('entrust_permissions'));
@@ -48,5 +49,10 @@ class UninstallCommand extends Command
         // $this->info($this->uninstall->dropTable('core_uploads'));
         $this->info($this->uninstall->dropTable('core_uploads'));
         $this->info($this->uninstall->dropTable('core_users'));
+    }
+    public function uninstallationService()
+    {
+        $providers = config('core.providers');
+        $this->info($this->uninstall->providers($providers));
     }
 }

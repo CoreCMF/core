@@ -28,12 +28,6 @@ class InstallCommand extends Command
      */
     protected $description = 'core packages install';
 
-    private $providers = [
-        'JeroenG\Packager\PackagerServiceProvider::class',  //包开发
-        'Laravel\Passport\PassportServiceProvider::class',  //api管理
-        'Zizaco\Entrust\EntrustServiceProvider::class',     //权限管理
-    ];
-
     public function __construct(Install $install)
     {
         parent::__construct();
@@ -58,6 +52,7 @@ class InstallCommand extends Command
      */
     public function installationService()
     {
-        $this->info($this->install->installProviders($this->providers));
+        $providers = config('core.providers');
+        $this->info($this->install->providers($providers));
     }
 }

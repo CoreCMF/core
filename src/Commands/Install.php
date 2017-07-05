@@ -27,7 +27,7 @@ class Install
     }
     public function dumpAutoload()
     {
-        exec('composer dumpautoload');
+        shell_exec('composer dump-autoload');
         return 'dumpAutoload';
     }
 	  public function migrate()
@@ -49,11 +49,11 @@ class Install
         ]);
         return 'db:seed --class='.$class;
     }
-    public function installProviders($serviceProvider){
+    public function providers($serviceProvider){
         $appConfigLine = 'CoreCMF\core\coreServiceProvider::class,';
         foreach ($serviceProvider as $provider ) {
             $appConfigLine = $appConfigLine.'
-        '.$provider.',';
+        '.$provider.'::class,';
         }
         $this->helper->replaceAndSave(getcwd().'/config/app.php', 'CoreCMF\core\coreServiceProvider::class,', $appConfigLine);
         return 'installProviders';
