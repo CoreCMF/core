@@ -2,8 +2,7 @@
 
 return [
     'providers' => [
-        JeroenG\Packager\PackagerServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,  //api认证
+        Zizaco\Entrust\EntrustServiceProvider::class,     //权限管理
     ],
 ];
