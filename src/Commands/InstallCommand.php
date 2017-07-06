@@ -2,6 +2,7 @@
 
 namespace CoreCMF\core\Commands;
 
+use Artisan;
 use Illuminate\Console\Command;
 
 use CoreCMF\core\Support\Files;
@@ -48,5 +49,8 @@ class InstallCommand extends Command
         $this->info($this->install->publish('seeds'));
         $this->info($this->install->dumpAutoload());
         $this->info($this->install->seed('CoreUserTableSeeder'));
+        //安装passport
+        $this->info('passport install');
+        Artisan::call('passport:install');
     }
 }
