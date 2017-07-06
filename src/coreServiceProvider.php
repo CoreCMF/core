@@ -8,7 +8,7 @@ use CoreCMF\core\Support\Builder\Html as builderHtml;
 use CoreCMF\core\Support\Builder\Form as builderForm;
 use CoreCMF\core\Support\Builder\Table as builderTable;
 use Laravel\Passport\Passport;
-
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class coreServiceProvider extends ServiceProvider
 {
     protected $commands = [
@@ -45,6 +45,9 @@ class coreServiceProvider extends ServiceProvider
      */
     public function register()
     {
+      //注册自己的中间件
+      $this->app->make(\Illuminate\Contracts\Http\Kernel::class)
+                ->pushMiddleware(Http\Middleware\Cors::class);
       $this->app->bind('builderHtml', function () {
           return new builderHtml();
       });
