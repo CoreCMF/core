@@ -35,11 +35,7 @@ class coreServiceProvider extends ServiceProvider
             __DIR__.'/../databases/seeds/' => database_path('seeds')
         ], 'seeds');
 
-        //注册providers服务
-        $providers = config('core.providers');
-        $this->registerProviders($providers);
-        //注册Passport
-        $this->registerPassport();
+        $this->initService();
     }
 
     /**
@@ -60,18 +56,27 @@ class coreServiceProvider extends ServiceProvider
       });
     }
 
-    public function registerProviders(array $providers)
+    public function initService()
     {
-        foreach ($providers as $provider) {
-            $this->app->register($provider);
-        }
+        //注册providers服务
+        $this->registerProviders();
+        //设置user模型位置
+        config(['auth.providers.users.model' => Models\User::class]);
+        //注册Passport
+        $this->registerPassport();
     }
-
     public function registerPassport()
     {
         //注册api认证的路由
         Passport::routes();
         //修改auth api 驱动
         config(['auth.guards.api.driver' => 'passport']);
+    }
+    public function registerProviders()
+    {
+        $providers = config('core.providers');
+        foreach ($providers as $provider) {
+            $this->app->register($provider);
+        }
     }
 }
