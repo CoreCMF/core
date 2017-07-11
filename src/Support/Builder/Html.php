@@ -29,7 +29,7 @@ class Html
    * @param  [type] $item [description]
    * @return [type]       [description]
    */
-  public function itemConfig($key,$value){
+  public function config($key,$value){
       $this->config[$key] = $value;
       return $this;
   }
