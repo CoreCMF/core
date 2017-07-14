@@ -40,13 +40,11 @@ class PhpExtension extends Prerequisite
             }
         }
         $hasInstalled->count() && $this->messages[] = [
-            'type' => 'message',
+            'type' => 'success',
             'message' => "PHP 扩展 '" . $hasInstalled->implode("', '") . "' 已经安装。",
         ];
         $notInstalled->count() && $this->messages[] = [
             'type' => 'error',
-            'detail' => '',
-            'help' => '',
             'message' => "必须安装 PHP 扩展 '" . $notInstalled->implode("', '") . "'！",
         ];
     }

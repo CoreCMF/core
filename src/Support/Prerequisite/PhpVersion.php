@@ -31,13 +31,11 @@ class PhpVersion extends Prerequisite
         if (version_compare(PHP_VERSION, $this->minVersion, '<')) {
             $this->messages[] = [
                 'type' => 'error',
-                'detail' => '',
-                'help' => '',
                 'message' => "PHP 版本必须至少为 {$this->minVersion} ，当前运行版本为 " . PHP_VERSION . " ！",
             ];
         } else {
             $this->messages[] = [
-                'type' => 'message',
+                'type' => 'success',
                 'message' => "PHP 版本检测通过，当前运行版本为 " . PHP_VERSION . " ！",
             ];
         }

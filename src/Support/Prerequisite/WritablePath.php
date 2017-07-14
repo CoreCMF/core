@@ -40,13 +40,11 @@ class WritablePath extends Prerequisite
             }
         }
         $isWritable->count() && $this->messages[] = [
-            'type' => 'message',
+            'type' => 'success',
             'message' => "目录权限检测通过，路径 '" . $isWritable->implode("', '") . "' 可写。",
         ];
         $notWritable->count() && $this->messages[] = [
             'type' => 'error',
-            'detail' => '',
-            'help' => '',
             'message' => "目录 '" . $notWritable->implode("', '") . "' 不可写！",
         ];
     }
