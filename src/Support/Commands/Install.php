@@ -3,12 +3,14 @@
 namespace CoreCMF\core\Support\Commands;
 
 use Artisan;
-/**
- * class install
- * @package CoreCMF\core\Commands
- */
+use Illuminate\Filesystem\Filesystem;
 class Install
 {
+    protected $fileSystem;
+    public function __construct(Filesystem $files)
+    {
+        $this->fileSystem = $files;
+    }
     public function dumpAutoload()
     {
         shell_exec('composer dump-autoload');
@@ -32,5 +34,19 @@ class Install
             '--class' => $class
         ]);
         return 'db:seed --class='.$class;
+    }
+    public function setEnv($name,$value)
+    {
+        $envPath = base_path() . DIRECTORY_SEPARATOR . '.env';
+        $contentArray = collect(file($envPath, FILE_IGNORE_NEW_LINES));
+        $contentArray->transform(function ($item) use ($name,$value){
+            if(str_contains($item, $name)){
+               return $name . '=' . $value;
+            }
+            return $item;
+        });
+        $content = implode($contentArray->toArray(), "\n");
+        $this->fileSystem->put($envPath, $content);
+        return 'SET .env '.$name.' TO '.$value;
     }
 }
