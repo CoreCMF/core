@@ -4,12 +4,10 @@ namespace CoreCMF\core\Commands;
 
 use Illuminate\Console\Command;
 
-use CoreCMF\core\Support\Files;
 use CoreCMF\core\Support\Commands\Uninstall;
 class UninstallCommand extends Command
 {
     protected $uninstall;
-    protected $files;
     /**
      * The name and signature of the console command.
      *
@@ -25,11 +23,10 @@ class UninstallCommand extends Command
      */
     protected $description = 'core packages uninstall';
 
-    public function __construct(Uninstall $uninstall,Files $files)
+    public function __construct(Uninstall $uninstall)
     {
         parent::__construct();
         $this->uninstall = $uninstall;
-        $this->files = $files;
     }
 
     /**

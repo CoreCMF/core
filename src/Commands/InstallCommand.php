@@ -5,7 +5,6 @@ namespace CoreCMF\core\Commands;
 use Artisan;
 use Illuminate\Console\Command;
 
-use CoreCMF\core\Support\Files;
 use CoreCMF\core\Support\Commands\Install;
 
 class InstallCommand extends Command
@@ -15,7 +14,6 @@ class InstallCommand extends Command
      * @var object
      */
     protected $install;
-    protected $files;
     /**
      * The name and signature of the console command.
      *
@@ -31,11 +29,10 @@ class InstallCommand extends Command
      */
     protected $description = 'core packages install';
 
-    public function __construct(Install $install,Files $files)
+    public function __construct(Install $install)
     {
         parent::__construct();
         $this->install = $install;
-        $this->files = $files;
     }
 
     /**
