@@ -49,4 +49,8 @@ class Install
         $this->fileSystem->put($envPath, $content);
         return 'SET .env '.$name.' TO '.$value;
     }
+    public function installModule($module)
+    {
+        Artisan::call('corecmf:'.$module);
+    }
 }
