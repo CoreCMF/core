@@ -63,7 +63,6 @@ class Form
    * loadAttribute 加载指定对象元素赋值 （最高支持二级对象）
    */
   public function itemData($Object){
-      $itemData = $Object->toArray();
        foreach ($this->data as &$item) {
               if (!isset($item['value'])) {
                   @$item['value'] = $itemData[$item['name']];
