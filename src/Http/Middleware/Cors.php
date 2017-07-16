@@ -15,7 +15,7 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        $domains = ['http://corecmf.dev','http://localhost:8080'];
+        $domains = ['http://corecmf.dev','http://localhost:8080','http://localhost:8081','http://localhost:8082'];
         if (isset($request->server()['HTTP_ORIGIN'])) {
             $origin = $request->server()['HTTP_ORIGIN'];
             if (in_array($origin, $domains)) {
