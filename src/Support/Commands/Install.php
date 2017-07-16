@@ -53,4 +53,14 @@ class Install
     {
         Artisan::call('corecmf:'.$module);
     }
+    /**
+     * Get a command from console instance.
+     *
+     * @param string $name
+     */
+    public function getCommand($name)
+    {
+        $kernel = resolve(\Illuminate\Contracts\Console\Kernel::class)->all();
+        return $kernel[$name];
+    }
 }
