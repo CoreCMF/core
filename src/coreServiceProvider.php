@@ -12,8 +12,11 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class coreServiceProvider extends ServiceProvider
 {
     protected $commands = [
-        'CoreCMF\core\Commands\InstallCommand',
-        'CoreCMF\core\Commands\UninstallCommand',
+        \CoreCMF\core\Commands\InstallCommand::class,
+        \CoreCMF\core\Commands\UninstallCommand::class,
+        \Laravel\Passport\Console\InstallCommand::class,
+        \Laravel\Passport\Console\ClientCommand::class,
+        \Laravel\Passport\Console\KeysCommand::class
     ];
     /**
      * Perform post-registration booting of services.
