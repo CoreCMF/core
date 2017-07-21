@@ -5,10 +5,13 @@ namespace CoreCMF\core\Support\Validator;
 
 class Rules
 {
-    protected $mobile;
-    protected $password;
-    protected $CheckPassword;
-
+    public $mobile;
+    public $password;
+    public $CheckPassword;
+    public function __construct()
+    {
+        $this->mobile();
+    }
     public function mobile(
       $empty = '请输入手机号码',
       $error = '请输入正确的手机号码'
