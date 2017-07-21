@@ -13,7 +13,7 @@ class Install
     }
     public function dumpAutoload()
     {
-        shell_exec('composer dump-autoload');
+        exec('composer dump-autoload');
         return 'dumpAutoload';
     }
 	  public function migrate()
@@ -51,7 +51,11 @@ class Install
     }
     public function installModule($module)
     {
-        Artisan::call('corecmf:'.$module);
+        Artisan::call('corecmf:'.$module.':install');
+    }
+    public function uninstallModule($module)
+    {
+        Artisan::call('corecmf:'.$module.':uninstall');
     }
     /**
      * Get a command from console instance.
