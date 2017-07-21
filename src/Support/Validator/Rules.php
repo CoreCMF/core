@@ -11,7 +11,7 @@ class Rules
 
     public function mobile(
       $empty = '请输入手机号码',
-      $error = '请输入正确的手机号码',
+      $error = '请输入正确的手机号码'
     )
     {
 
