@@ -4,6 +4,7 @@ namespace CoreCMF\core\Support\Commands;
 
 use Artisan;
 use Illuminate\Filesystem\Filesystem;
+use CoreCMF\core\Support\Database\Seeds\DatabaseSeeder;
 class Install
 {
     protected $fileSystem;
@@ -30,9 +31,8 @@ class Install
     }
     public function seed($class)
     {
-        Artisan::call('db:seed', [
-            '--class' => $class
-        ]);
+        $seeder = new DatabaseSeeder();
+        $seeder->run($class);
         return 'db:seed --class='.$class;
     }
     public function setEnv($name,$value)
