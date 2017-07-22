@@ -43,8 +43,6 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->info($this->install->migrate());
-        $this->info($this->install->publish('seeds'));
-        $this->info($this->install->dumpAutoload());
         //安装passport
         $this->info('passport install');
         Artisan::call('passport:install');
