@@ -32,11 +32,7 @@ class coreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/Config/config.php', 'core');
         $this->mergeConfigFrom(__DIR__.'/Config/entrust.php', 'entrust');
         //迁移文件配置
-        $this->loadMigrationsFrom(__DIR__.'/../databases/migrations');
-        //发布seed填充文件
-        $this->publishes([
-            __DIR__.'/../databases/seeds/' => database_path('seeds')
-        ], 'seeds');
+        $this->loadMigrationsFrom(__DIR__.'/Databases/migrations');
 
         $this->initService();
     }
