@@ -65,7 +65,7 @@ class Form
   public function itemData($Object){
        foreach ($this->data as &$item) {
               if (!isset($item['value'])) {
-                  @$item['value'] = $itemData[$item['name']];
+                  @$item['value'] = $Object[$item['name']];
               }
               if (isset($item['loadAttribute'])) {
                   $loadAttribute = collect($item['loadAttribute'])
@@ -74,9 +74,9 @@ class Form
                       });
                   foreach ($loadAttribute as $key => $value) {
                       if($key){
-                          @$item[$key] = $itemData[$value[0]][$value[1]];
+                          @$item[$key] = $Object[$value[0]][$value[1]];
                       }else{
-                          @$item['value'] = $itemData[$value[0]][$value[1]];
+                          @$item['value'] = $Object[$value[0]][$value[1]];
                       }
                   }
               }
