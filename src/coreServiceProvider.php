@@ -2,13 +2,18 @@
 
 namespace CoreCMF\core;
 
+use Laravel\Passport\Passport;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use CoreCMF\core\Support\Builder\Html as builderHtml;
 use CoreCMF\core\Support\Builder\Form as builderForm;
 use CoreCMF\core\Support\Builder\Table as builderTable;
-use Laravel\Passport\Passport;
-use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use CoreCMF\core\Support\Contracts\Prerequisite;
+use CoreCMF\core\Support\Prerequisite\Composite;
+use CoreCMF\core\Support\Prerequisite\PhpExtension;
+use CoreCMF\core\Support\Prerequisite\PhpVersion;
+use CoreCMF\core\Support\Prerequisite\WritablePath;
 class coreServiceProvider extends ServiceProvider
 {
     protected $commands = [
@@ -55,6 +60,13 @@ class coreServiceProvider extends ServiceProvider
       });
       $this->app->bind('builderTable', function () {
           return new builderTable();
+      });
+      $this->app->singleton(Prerequisite::class, function () {
+          return new Composite(
+            new PhpVersion(config('corecmf.prerequisite.phpVersion')),
+            new PhpExtension(config('corecmf.prerequisite.phpExtension')),
+            new WritablePath(config('corecmf.prerequisite.writablePath'))
+          );
       });
     }
 
