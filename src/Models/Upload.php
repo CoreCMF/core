@@ -146,8 +146,8 @@ class Upload extends Model
         $fileInfo['download'] = 0;
         $fileInfo['status'] = 1;
         $fileInfo['sort'] = 0;
-        $fileInfo['path'] = '/local/'.$mimeType.'/'.$fileHashName; //保存路径
-        $fileInfo['disk'] = 'local'; //存储方式
+        $fileInfo['path'] = DIRECTORY_SEPARATOR.$mimeType.DIRECTORY_SEPARATOR.$fileHashName; //保存路径
+        $fileInfo['disk'] = 'public'; //存储方式
         //end
         //begin查询文件是否存在
         $fileObject = $this->where('sha1', $fileInfo['sha1'])
@@ -168,11 +168,10 @@ class Upload extends Model
             $fileInfo['path'],
             file_get_contents($fileRealPath)
         ); //保存文件
-
         if ($storage) {
             switch ($fileInfo['disk']) {
-                case 'local':
-                    $fileInfo['url'] = asset($fileInfo['path']);
+                case 'public':
+                    $fileInfo['url'] = $fileInfo['path'];
                     break;
 
                 default:
