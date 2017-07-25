@@ -30,6 +30,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * [uploads 关联Upload模型]
+     * @return   [type]                   [description]
+     */
+    public function userInfos()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
