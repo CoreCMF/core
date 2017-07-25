@@ -6,6 +6,9 @@ class Table
 {
   private $type = 'table';
   private $stripe = true;
+  private $tabs;
+  private $tabsGroup;
+  private $data;
   private $column;
   private $topButton;
   private $rightButton;
