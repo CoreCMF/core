@@ -23,6 +23,14 @@ class CoreUsersTable extends Migration
             $table->tinyInteger('status')       ->comment('状态')->default(1);
             $table->timestamps();
         });
+        Schema::create('core_user_infos', function (Blueprint $table) {
+            $table->increments('user_id')->unsigned();
+            $table->integer('avatar')           ->comment('用户头像')->unsigned()->default(1);
+            $table->integer('integral')         ->comment('用户积分')->unsigned()->default(0);
+            $table->decimal('money',11, 2)      ->comment('用户余额')->unsigned()->default(0);
+            $table->foreign('user_id')->references('id')->on('core_users')
+                ->onUpdate('cascade')->onDelete('cascade');
+        });
     }
 
     /**
@@ -33,5 +41,6 @@ class CoreUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('core_users');
+        Schema::dropIfExists('core_user_infos');
     }
 }
