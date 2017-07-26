@@ -44,6 +44,7 @@ class InstallCommand extends Command
     {
         $this->info($this->install->migrate());
         $this->info($this->install->publish('core'));
+        $this->info($this->install->seed(\CoreCMF\core\Databases\seeds\RoleTableSeeder::class));
         $this->info($this->install->seed(\CoreCMF\core\Databases\seeds\UploadTableSeeder::class));
         //安装passport
         $this->info('passport install');
