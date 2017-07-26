@@ -2,6 +2,7 @@
 
 namespace CoreCMF\core\Models;
 use Illuminate\Database\Eloquent\Model;
+use CoreCMF\core\Models\Upload;
 
 class UserInfo extends Model
 {
@@ -13,6 +14,7 @@ class UserInfo extends Model
     public $timestamps = false;
 
     protected $appends = ['avatarUrl'];
+
 	/**
 	 * [getAvatarUrlAttribute 根据ID获取头像图片URL]
 	 * @param    [type]                   $value [头像图片ID]
@@ -20,6 +22,7 @@ class UserInfo extends Model
 	 */
     public function getAvatarUrlAttribute()
     {
-    	return $this->attributes['avatar'];
+      $uploadModel = new Upload();
+      return $uploadModel->getUploadWhereFirst($this->attributes['avatar'])->url;
     }
 }
