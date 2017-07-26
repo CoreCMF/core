@@ -23,6 +23,6 @@ class UserInfo extends Model
     public function getAvatarUrlAttribute()
     {
       $uploadModel = new Upload();
-      return $uploadModel->getUploadWhereFirst($this->attributes['avatar'])->url;
+      return asset($uploadModel->getUploadWhereFirst($this->attributes['avatar'])->url);
     }
 }
