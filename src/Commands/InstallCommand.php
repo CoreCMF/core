@@ -43,6 +43,8 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->info($this->install->migrate());
+        $this->info($this->install->publish('core'));
+        $this->info($this->install->seed(\CoreCMF\core\Databases\seeds\UploadTableSeeder::class));
         //安装passport
         $this->info('passport install');
         Artisan::call('passport:install');

@@ -38,7 +38,10 @@ class coreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/Config/entrust.php', 'entrust');
         //迁移文件配置
         $this->loadMigrationsFrom(__DIR__.'/Databases/migrations');
-
+        //设置发布前端文件
+        $this->publishes([
+            __DIR__.'/../resources/vendor/' => public_path('vendor'),
+        ], 'core');
         $this->initService();
     }
 
