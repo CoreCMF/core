@@ -12,6 +12,7 @@ class Html
     private $config;
     private $tabs;
     private $message;
+    private $auth;
 
     public function __construct()
     {
@@ -44,11 +45,19 @@ class Html
         return $this;
     }
     /**
-     * [message 提示纤细]
+     * [message 提示信息]
      * @param  [type] $message [description]
      */
     public function message($message){
         $this->message   = $message;
+        return $this;
+    }
+    /**
+     * [message 提示信息]
+     * @param  [type] $message [description]
+     */
+    public function auth($auth){
+        $this->auth   = $auth;
         return $this;
     }
     /**
@@ -61,6 +70,7 @@ class Html
         $response['items']   = $this->items;
         $response['config']  = $this->config;
         $response['message']  = $this->message;
+        $response['auth']  = $this->auth;
 
         return $response;
     }
