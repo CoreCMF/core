@@ -65,7 +65,7 @@ class User extends Authenticatable
             $user = $this->findForUser($request->mobile);
             $callback = '用户手机已存在!';
         }
-        if ($user) {
+        if ($user->id != $request->id) {
           //resolve use Illuminate\Container\Container;
           return resolve('builderHtml')
                     ->withCode(422)
