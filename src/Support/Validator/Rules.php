@@ -8,11 +8,26 @@ class Rules
     public $mobile;
     public $password;
     public $checkPassword;
+    public $asyncField;
     public function __construct()
     {
         $this->mobile();
         $this->password();
         $this->checkPassword();
+    }
+    public function asyncField($url, $name)
+    {
+        return "
+              axios({
+                url:'".$url."',
+                ".$name.":this.fromData['".$name."']
+              }).then(function(data){
+                console.log(data);
+                callback();
+              },function(error){
+                callback(new Error(error))
+              });
+          ";
     }
     public function mobile(
       $empty = '请输入手机号码',
