@@ -13,6 +13,8 @@ class Html
     private $tabs;
     private $message;
     private $auth;
+    private $callback;
+    private $withCode = 200;
 
     public function __construct()
     {
@@ -53,11 +55,27 @@ class Html
         return $this;
     }
     /**
-     * [message 提示信息]
-     * @param  [type] $message [description]
+     * [auth 用户认证信息]
+     * @param  [type] $auth [description]
      */
     public function auth($auth){
         $this->auth   = $auth;
+        return $this;
+    }
+    /**
+     * [callback 回调信息]
+     * @param  [type] $callback [description]
+     */
+    public function callback($callback){
+        $this->callback   = $callback;
+        return $this;
+    }
+    /**
+     * [withCode 返回代码状态]
+     * @param  [type] $withCode [description]
+     */
+    public function withCode($withCode){
+        $this->withCode   = $withCode;
         return $this;
     }
     /**
@@ -71,7 +89,8 @@ class Html
         $response['config']  = $this->config;
         $response['message']  = $this->message;
         $response['auth']  = $this->auth;
+        $response['callback']  = $this->callback;
 
-        return $response;
+        return response()->json($response, $this->withCode);
     }
 }
