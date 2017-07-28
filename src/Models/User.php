@@ -43,4 +43,35 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+    /**
+     * [findForUser 根据用户名或者邮箱、手机找到用户信息]
+     */
+    public function findForUser($username){
+        return $this->where('name', $username)
+                    ->orwhere('email',$username)
+                    ->orwhere('mobile',$username)
+                    ->first();
+    }
+    public function check($request){
+        if ($request->name) {
+            $user = $this->findForUser($request->name);
+            $callback = '用户名已存在!';
+        }
+        if ($request->email) {
+            $user = $this->findForUser($request->email);
+            $callback = '用户邮箱已存在!';
+        }
+        if ($request->mobile) {
+            $user = $this->findForUser($request->mobile);
+            $callback = '用户手机已存在!';
+        }
+        if ($user) {
+          //resolve use Illuminate\Container\Container;
+          return resolve('builderHtml')
+                    ->withCode(422)
+                    ->callback($callback)
+                    ->response();
+        }
+        return;
+    }
 }
