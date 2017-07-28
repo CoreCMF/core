@@ -11,7 +11,7 @@ class Rules
     public $asyncField;
     public function __construct()
     {
-        $this->mobile('mobile');
+        $this->mobile();
         $this->password();
         $this->checkPassword();
     }
@@ -33,7 +33,6 @@ class Rules
           ";
     }
     public function mobile(
-      $name,
       $empty = '请输入手机号码',
       $error = '请输入正确的手机号码'
     )
@@ -45,10 +44,9 @@ class Rules
                   callback('".$empty."');
                 } else {
                     if (!/^1[3578]\d{9}$/.test(value)) {
-                      callback('".$error."');
-                    }else{
-                      ".$this->asyncField(route('api.admin.system.user.check'),$name)."
+                        callback('".$error."');
                     }
+                    callback();
                 }
             }
         ";
