@@ -15,15 +15,13 @@ class Rules
         $this->password();
         $this->checkPassword();
     }
-    public function asyncField($url, $name)
+    public function asyncField($url, $postData)
     {
         return "
               axios({
                 method: 'post',
                 url:'".$url."',
-                data: {
-                  ".$name.":this.fromData.".$name."
-                }
+                data: ".$postData."
               }).then(function(Response){
                 callback();
               })
