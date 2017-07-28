@@ -19,13 +19,16 @@ class Rules
     {
         return "
               axios({
+                method: 'post',
                 url:'".$url."',
-                ".$name.":this.fromData['".$name."']
-              }).then(function(data){
-                console.log(data);
+                data: {
+                  ".$name.":this.fromData.".$name."
+                }
+              }).then(function(Response){
                 callback();
-              },function(error){
-                callback(new Error(error))
+              })
+              .catch(function (error) {
+                callback(error.response.data.callback);
               });
           ";
     }
@@ -38,10 +41,10 @@ class Rules
         return $this->mobile = "
             (rule, value, callback) => {
                 if (value == undefined) {
-                  callback(new Error('".$empty."'));
+                  callback('".$empty."');
                 } else {
                     if (!/^1[3578]\d{9}$/.test(value)) {
-                        callback(new Error('".$error."'));
+                        callback('".$error."');
                     }
                     callback();
                 }
@@ -58,10 +61,10 @@ class Rules
         return $this->password = "
             (rule, value, callback) => {
                 if (value == undefined) {
-                  callback(new Error('".$empty."'));
+                  callback('".$empty."');
                 } else {
                     if (!/^.{".$begin.",".$end."}$/.test(value)) {
-                        callback(new Error('密码长度请控制在 ".$begin." 到 ".$end." 个字符'));
+                        callback('密码长度请控制在 ".$begin." 到 ".$end." 个字符');
                     }
                     if (this.fromData['".$checkPassword."'] !== '') {
                         this.\$refs.bvefrom.validateField('".$checkPassword."');
@@ -78,10 +81,10 @@ class Rules
         return $this->checkPassword = "
             (rule, value, callback) => {
                 if (value == undefined) {
-                  callback(new Error('".$empty."'));
+                  callback('".$empty."');
                 }
                 if (value !== this.fromData['".$password."']) {
-                  callback(new Error('两次输入密码不一致!'));
+                  callback('两次输入密码不一致!');
                 } else {
                   callback();
                 }
