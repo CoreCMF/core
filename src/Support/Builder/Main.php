@@ -4,13 +4,13 @@ namespace CoreCMF\core\Support\Builder;
 
 class Main
 {
-    public $data;
-
+    private $type = 'main';
     private $routes = [];
     private $config;
     private $apiUrl;
     private $topNavs;
     private $menus;
+    private $response;
     /**
      * Create a new Skeleton Instance
      */
@@ -61,36 +61,20 @@ class Main
      * @param    [type]                   $topNav [顶部导航配置数据]
      * @return   [type]                           [description]
      */
-    public function addTopNav($topNav){
+    public function topNav($topNav){
         return $this->topNavs[$topNav['name']] = $topNav;
-    }
-    /**
-     * [getTopNavs 获取顶部导航 并根据sort进行排序]
-     * @return   [type]                   [description]
-     */
-    public function getTopNavs(){
-        $topNavs = collect($this->topNavs)->sortBy('sort');
-        $this->topNavs = $topNavs;
-        return $this->topNavs;
-    }
-    /**
-     * [getMenus 获取处理后的菜单数据]
-     * @return [type] [description]
-     */
-    public function getMenus(){
-      return $this->menus;
     }
     /**
      * [setMenus 批量设置导航菜单]
      * @param    [type]                   $menus [description]
      */
-    public function setMenus($menus){
+    public function menus($menus){
         $menus = $menus->map(function ($menu) {
             $menu->path = $menu->value;
             return $menu;
         })->filter(function ($menu, $key) use($menus) {
             if ($menu->pid == 0) {
-                $menu = $this->getSubMenus($menu,$menus);
+                $menu = $this->subMenus($menu,$menus);
             }
             return $menu->pid == 0;
         });
@@ -103,11 +87,11 @@ class Main
      * @param    [type]                   $menus [菜单原始数据]
      * @return   [type]                          [description]
      */
-    public function getSubMenus($menu,$menus){
+    public function subMenus($menu,$menus){
         $id = $menu->id;
         $subMenus = $menus->filter(function ($menu, $key) use($id,$menus) {
             if ($menu->pid == $id) {
-                $menu = $this->getSubMenus($menu,$menus);
+                $menu = $this->subMenus($menu,$menus);
             }
             return $menu->pid == $id;
         });
@@ -144,9 +128,12 @@ class Main
      */
     public function response()
     {
-        $this->data['routes'] = $this->routes;
-        $this->data['config'] = $this->config;
-        $this->data['apiUrl'] = $this->apiUrl;
-        return $this->data;
+        $this->response['type']   = $this->type;
+        $this->response['routes'] = $this->routes;
+        $this->response['config'] = $this->config;
+        $this->response['apiUrl'] = $this->apiUrl;
+        $this->response['menus']  = $this->menus;
+        $this->response['topNavs']= collect($this->topNavs)->sortBy('sort');
+        return $this->response;
     }
 }
