@@ -8,6 +8,7 @@ use CoreCMF\core\Support\Builder\Table;
 class Html
 {
     private $items;
+    private $main;
     private $title;
     private $config;
     private $tabs;
@@ -28,11 +29,10 @@ class Html
         $this->items[] = $item->response();
         return $this;
     }
-    /**
-     * [item html项目]
-     * @param  [type] $item [description]
-     * @return [type]       [description]
-     */
+    public function main($main){
+        $this->main = $main->response();
+        return $this;
+    }
     public function config($key,$value){
         $this->config[$key] = $value;
         return $this;
@@ -84,12 +84,13 @@ class Html
      */
     public function response()
     {
-        $response['title']  = $this->title;
+        $response['title']   = $this->title;
         $response['items']   = $this->items;
+        $response['main']    = $this->main;
         $response['config']  = $this->config;
-        $response['message']  = $this->message;
-        $response['auth']  = $this->auth;
-        $response['callback']  = $this->callback;
+        $response['message'] = $this->message;
+        $response['auth']    = $this->auth;
+        $response['callback']= $this->callback;
 
         return response()->json($response, $this->withCode);
     }
