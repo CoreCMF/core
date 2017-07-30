@@ -73,10 +73,10 @@ class Main
             $menu->path = $menu->value;
             return $menu;
         })->filter(function ($menu, $key) use($menus) {
-            if ($menu->pid == 0) {
+            if (empty($menu->parent)) {
                 $menu = $this->subMenus($menu,$menus);
             }
-            return $menu->pid == 0;
+            return $menu->parent == null;
         });
         return $this->menus  = $menus;
     }
@@ -88,12 +88,12 @@ class Main
      * @return   [type]                          [description]
      */
     public function subMenus($menu,$menus){
-        $id = $menu->id;
-        $subMenus = $menus->filter(function ($menu, $key) use($id,$menus) {
-            if ($menu->pid == $id) {
+        $name = $menu->name;
+        $subMenus = $menus->filter(function ($menu, $key) use($name,$menus) {
+            if ($menu->parent == $name) {
                 $menu = $this->subMenus($menu,$menus);
             }
-            return $menu->pid == $id;
+            return $menu->parent == $name;
         });
         if (!$subMenus->isEmpty()) {
             $menu->subMenus = $subMenus;
