@@ -14,6 +14,7 @@ use CoreCMF\core\Support\Prerequisite\Composite;
 use CoreCMF\core\Support\Prerequisite\PhpExtension;
 use CoreCMF\core\Support\Prerequisite\PhpVersion;
 use CoreCMF\core\Support\Prerequisite\WritablePath;
+
 class coreServiceProvider extends ServiceProvider
 {
     protected $commands = [
