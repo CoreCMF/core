@@ -2,6 +2,7 @@
 
 namespace CoreCMF\core;
 
+use Route;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\Schema;
@@ -53,9 +54,8 @@ class coreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-      //注册自己的中间件
-      $this->app->make(\Illuminate\Contracts\Http\Kernel::class)
-                ->pushMiddleware(Http\Middleware\Cors::class);
+      $this->middleware();
+
       $this->app->bind('builderHtml', function () {
           return new builderHtml();
       });
@@ -96,5 +96,13 @@ class coreServiceProvider extends ServiceProvider
         foreach ($providers as $provider) {
             $this->app->register($provider);
         }
+    }
+    public function middleware()
+    {
+        //注册跨域控制中间件
+        $this->app->make(\Illuminate\Contracts\Http\Kernel::class)
+                  ->pushMiddleware(Http\Middleware\Cors::class);
+        //注册 Passport JavaScript消费API 中间件
+        Route::pushMiddlewareToGroup('web', \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class);
     }
 }
