@@ -31,6 +31,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function hasGroup($group)
+    {
+      if (is_array($group)) {
+          foreach ($group as $groupName) {
+              if ($this->hasGroup($groupName)) {
+                  return true;
+              }
+          }
+      } else {
+          foreach ($this->cachedRoles() as $role) {
+              if ($role->group == $group) {
+                  return true;
+              }
+          }
+      }
+      return false;
+    }
     /**
      * [uploads 关联Upload模型]
      * @return   [type]                   [description]
