@@ -15,10 +15,10 @@ class EntrustPermissionsTables extends Migration
         Schema::create('entrust_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique()->comment('权限名字');
-            $table->string('parent')->nullable()->comment('父级名字');
+            $table->string('parent')->nullable()->comment('父级权限名字');
             $table->string('display_name')->nullable()->comment('显示权限名称');
             $table->string('description')->nullable()->comment('权限描述');
-            $table->tinyInteger('group')->comment('权限分组')->unsigned();
+            $table->string('group')->comment('权限分组');
             $table->timestamps();
         });
     }

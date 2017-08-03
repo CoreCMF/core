@@ -17,6 +17,7 @@ class EntrustRolesTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->string('group')->comment('角色分组');
             $table->timestamps();
         });
     }
