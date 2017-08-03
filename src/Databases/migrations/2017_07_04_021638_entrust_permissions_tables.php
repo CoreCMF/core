@@ -18,7 +18,7 @@ class EntrustPermissionsTables extends Migration
             $table->string('parent')->nullable()->comment('父级权限名字');
             $table->string('display_name')->nullable()->comment('显示权限名称');
             $table->string('description')->nullable()->comment('权限描述');
-            $table->string('group')->comment('权限分组');
+            $table->string('group')->nullable()->comment('权限分组');
             $table->timestamps();
         });
     }
