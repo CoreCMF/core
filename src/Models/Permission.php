@@ -5,9 +5,8 @@ use Zizaco\Entrust\EntrustPermission;
 
 class Permission extends EntrustPermission
 {
-    public $table = 'entrust_roles';
 
-    protected $fillable = ['name', 'display_name', 'description'];
+    protected $fillable = ['name', 'display_name', 'description', 'group'];
 
     public function isExist($name)
     {
