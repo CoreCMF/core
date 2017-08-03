@@ -102,7 +102,5 @@ class coreServiceProvider extends ServiceProvider
         //注册跨域控制中间件
         $this->app->make(\Illuminate\Contracts\Http\Kernel::class)
                   ->pushMiddleware(Http\Middleware\Cors::class);
-        //注册 Passport JavaScript消费API 中间件
-        Route::pushMiddlewareToGroup('web', \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class);
     }
 }
