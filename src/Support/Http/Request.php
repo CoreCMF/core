@@ -13,11 +13,11 @@ class Request
    */
   public function __construct(laravelRequest $request)
   {
-    $this->request = $request;
+      $this->request = $request;
   }
   public function get($key, $default=null)
   {
-    return empty($this->request->$key) ? $default : $this->request->$key;
+      return empty($this->request->$key) ? $default : $this->request->$key;
   }
   /**
    * [response 数据处理返回]
