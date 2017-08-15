@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use CoreCMF\core\Support\Builder\Html as builderHtml;
 use CoreCMF\core\Support\Builder\Form as builderForm;
 use CoreCMF\core\Support\Builder\Table as builderTable;
+use CoreCMF\core\Support\Builder\Model as builderModel;
 use CoreCMF\core\Support\Contracts\Prerequisite;
 use CoreCMF\core\Support\Prerequisite\Composite;
 use CoreCMF\core\Support\Prerequisite\PhpExtension;
@@ -64,6 +65,9 @@ class coreServiceProvider extends ServiceProvider
       });
       $this->app->bind('builderTable', function () {
           return new builderTable();
+      });
+      $this->app->bind('builderModel', function () {
+          return new builderModel();
       });
       $this->app->singleton(Prerequisite::class, function () {
           return new Composite(
