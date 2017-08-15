@@ -2,9 +2,6 @@
 
 namespace CoreCMF\core\Support\Builder;
 
-use CoreCMF\core\Support\Builder\Form;
-use CoreCMF\core\Support\Builder\Table;
-
 class Html
 {
     private $items;
@@ -16,6 +13,7 @@ class Html
     private $auth;
     private $callback;
     private $withCode = 200;
+    private $cookie = null;
 
     public function __construct()
     {
@@ -78,6 +76,10 @@ class Html
         $this->withCode   = $withCode;
         return $this;
     }
+    public function cookie($cookie){
+        $this->cookie   = $cookie;
+        return $this;
+    }
     /**
      * [response 数据处理返回]
      * @return   [type]                   [description]
@@ -91,7 +93,9 @@ class Html
         $response['message'] = $this->message;
         $response['auth']    = $this->auth;
         $response['callback']= $this->callback;
-
+        if ($this->cookie) {
+            return response()->json($response, $this->withCode)->cookie($this->cookie);
+        }
         return response()->json($response, $this->withCode);
     }
 }
