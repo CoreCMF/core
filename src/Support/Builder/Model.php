@@ -5,13 +5,13 @@ class Model
 {
     private $request;
     private $model;
-    private $total = false;
     private $orderBy = [ 'column'=>'id', 'direction'=>'ASC' ];
     private $page;
     private $pageSize;
     private $group;
     private $selectSearch;
     private $inputSearch;
+    private $relations;
 
     public function __construct()
     {
@@ -19,10 +19,6 @@ class Model
     public function request($request)
     {
         $this->request = $request;
-        return $this;
-    }
-    public function total(){
-        $this->total = true;
         return $this;
     }
     public function orderBy($column,$direction){
@@ -34,7 +30,7 @@ class Model
         $this->group = $this->get('tabIndex',$group);
         return $this;
     }
-    public function page($pageSize){
+    public function pageSize($pageSize){
         $this->pageSize = $this->get('pageSize',$pageSize);
         $this->page = $this->get('page',1);
         return $this;
@@ -44,11 +40,15 @@ class Model
         $this->inputSearch  = '%'.$this->get('inputSearch').'%';
         return $this;
     }
+    public function load($relations)
+    {
+        $this->relations = $relations;
+        return $this;
+    }
     public function getData($model){
         $this->model = $model;
-        if ($this->total) {
-            $data['total'] = $this->getTotal();
-        }
+        $this->search();//搜索
+        $data['total'] = $this->getTotal();
         if ($this->pageSize) {
             $data['pageSize'] = $this->pageSize;
         }
@@ -69,7 +69,13 @@ class Model
         if ($this->pageSize) {
             $data->skip(($this->page-1)*$this->pageSize)->take($this->pageSize);
         }
-        return $data->get();
+        //获取数据
+        $modelData = $data->get();
+        //懒惰渴求式加载关联数据
+        if ($this->relations) {
+            $modelData->load($this->relations);
+        }
+        return $modelData;
     }
     /**
      * 获取模型数据量
@@ -80,7 +86,7 @@ class Model
         if ($this->group) {
             $data->where('group', '=', $this->group);  //根据分组获取
         }
-        if ($this->inputSearch != '%%') {
+        if ($this->inputSearch) {
             $data->where($this->selectSearch, 'like', $this->inputSearch); //搜索获取
         }
         return $data->count();
