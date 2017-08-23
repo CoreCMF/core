@@ -35,10 +35,11 @@ class Model
         $this->group = $this->get('tabIndex',$group);
         return $this;
     }
-    public function parent($name, $parent)
+    public function parent($name, $parent, $indentField='name')
     {
         $this->parent['name'] = $name;
         $this->parent['parent'] = $parent;
+        $this->parent['indentField'] = $indentField;
         return $this;
     }
     // 分页
@@ -115,18 +116,18 @@ class Model
     private function toFormatTree($modelData)
     {
         $dataTree= $this->dataToTree($modelData);
-        return $this->_toFormatTree($dataTree,'name');
+        return $this->_toFormatTree($dataTree,$this->parent['indentField']);
     }
-    private function _toFormatTree($dataTree, $title = 'title', $level = 0)
+    private function _toFormatTree($dataTree, $indentField, $level = 0)
     {
-        $dataTree->map(function ($item, $key) use($dataTree,$title,$level) {
+        $dataTree->map(function ($item, $key) use($dataTree,$indentField,$level) {
             $title_prefix = str_repeat("　", $level * 2). "┝ ";
-            $item->$title   = $level == 0 ? $item->$title : $title_prefix . $item->$title;
+            $item->$indentField   = $level == 0 ? $item->$indentField : $title_prefix . $item->$indentField;
             if ($item->subDatas) {
                 $subDatas = $item->subDatas;
                 unset($item->subDatas);//删除子类数据
                 $this->mergeTree->push($item); //添加进合集
-                $this->_toFormatTree($subDatas, $title, $level+1);//循环子类
+                $this->_toFormatTree($subDatas, $indentField, $level+1);//循环子类
             }else{
                 $this->mergeTree->push($item); //添加进合集
             }
@@ -182,12 +183,10 @@ class Model
             foreach ($name as $key) {
                 $model->$key =  $this->request->$key;
             }
+            return $model->save();
         }else{
-            foreach ($this->request->all() as $key => $value) {
-                $model->$key = $value;
-            }
+            return $model->create($this->request->all());
         }
-        return $model->save();
     }
     /**
      * 数据批量删除
