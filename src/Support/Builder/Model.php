@@ -100,6 +100,20 @@ class Model
         return $modelData;
     }
     /**
+     * 集合数据转Select选择数据
+     * $modelData 集合数据
+     * $key 选择后提交的数据字段名
+     * $name 显示名称的数据字段名
+     */
+    public function toSelectData($modelData,$key,$name)
+    {
+        $selectData = [];
+        foreach ($modelData as $value) {
+            $selectData[$value->name] = $value->display_name;
+        }
+        return $selectData;
+    }
+    /**
      * 获取模型数据数量
      */
     public function getTotal()
@@ -128,7 +142,7 @@ class Model
     private function _toFormatTree($dataTree, $indentField, $level = 0)
     {
         $dataTree->map(function ($item, $key) use($dataTree,$indentField,$level) {
-            $title_prefix = str_repeat("　", $level * 2). "┝ ";
+            $title_prefix = str_repeat("　", $level). "┝ ";
             $item->$indentField   = $level == 0 ? $item->$indentField : $title_prefix . $item->$indentField;
             if ($item->subDatas) {
                 $subDatas = $item->subDatas;
