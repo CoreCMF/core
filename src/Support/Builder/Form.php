@@ -10,7 +10,7 @@ class Form
   private $config;
   private $rules;
   private $tabs;
-  private $tabsGroup;
+  private $defaultTabs;
   private $response;
   public  $itemType = [
           'hidden'     => '隐藏',
@@ -112,10 +112,10 @@ class Form
       return $this;
   }
   /**
-   * [tabsGroup tabs分组字段]
+   * [defaultTabs tabs分组默认字段]
    */
-  public function tabsGroup($name){
-      $this->tabsGroup   = $name;
+  public function defaultTabs($name){
+      $this->defaultTabs   = $name;
       return $this;
   }
   /**
@@ -126,7 +126,7 @@ class Form
   {
       $this->response['type']       = $this->type;
       $this->response['tabs']       = $this->tabs;
-      $this->response['tabsGroup']  = $this->tabsGroup;
+      $this->response['defaultTabs']= $this->defaultTabs;
       $this->response['data']       = $this->data;
       $this->response['apiUrl']     = $this->apiUrl;
       $this->response['config']     = $this->config;

@@ -7,7 +7,7 @@ class Table
   private $type = 'table';
   private $stripe = true;
   private $tabs;
-  private $tabsGroup;
+  private $defaultTabs;
   private $data;
   private $column;
   private $topButton;
@@ -30,10 +30,10 @@ class Table
       return $this;
   }
   /**
-   * [tabsGroup tabs分组字段]
+   * [defaultTabs tabs分组字段]
    */
-  public function tabsGroup($name){
-      $this->tabsGroup   = $name;
+  public function defaultTabs($name){
+      $this->defaultTabs   = $name;
       return $this;
   }
   /**
@@ -84,7 +84,7 @@ class Table
       $response['type']       = $this->type;
       $response['stripe']     = $this->stripe;
       $response['tabs']       = $this->tabs;
-      $response['tabsGroup']  = $this->tabsGroup;
+      $response['defaultTabs']  = $this->defaultTabs;
       $response['data']       = $this->data;
       $response['column']     = $this->column;
       $response['topButton']  = $this->topButton;

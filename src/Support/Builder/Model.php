@@ -8,7 +8,7 @@ class Model
     private $orderBy = [ 'column'=>'id', 'direction'=>'ASC' ];
     private $page;
     private $pageSize;
-    private $group;
+    private $group = null;
     private $selectSearch;
     private $inputSearch;
     private $relations;
@@ -76,7 +76,7 @@ class Model
     public function modelData(){
         $data = $this->model->orderBy($this->orderBy['column'], $this->orderBy['direction']);
         // 分组
-        if ($this->group) {
+        if (!empty($this->group)||$this->group ==='0') {
             $data->where('group', '=', $this->group);  //根据分组获取
         }
         // 搜索
@@ -104,7 +104,7 @@ class Model
     public function getTotal()
     {
         $data = $this->model->orderBy($this->orderBy['column'], $this->orderBy['direction']);
-        if ($this->group) {
+        if (!empty($this->group)||$this->group ==='0') {
             $data->where('group', '=', $this->group);  //根据分组获取
         }
         if ($this->inputSearch) {
