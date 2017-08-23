@@ -171,4 +171,34 @@ class Model
         return empty($this->request->$key) ? $default : $this->request->$key;
     }
 
+    /**
+     * 数据批量保存
+     * $model 模型
+     * $name 保存字段
+     */
+    public function save($model,$name=null)
+    {
+        if ($name) {
+            foreach ($name as $key) {
+                $model->$key =  $this->request->$key;
+            }
+        }else{
+            foreach ($this->request->all() as $key => $value) {
+                $model->$key = $value;
+            }
+        }
+        return $model->save();
+    }
+    /**
+     * 数据批量删除
+     */
+    public function delete($model)
+    {
+        $input = $this->request->all();
+        foreach ($input as $id => $value) {
+            $response = $model->find($id)->forceDelete();
+        }
+        return true;
+    }
+
 }
