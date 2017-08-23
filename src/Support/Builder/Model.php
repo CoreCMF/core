@@ -118,6 +118,13 @@ class Model
         $dataTree= $this->dataToTree($modelData);
         return $this->_toFormatTree($dataTree,$this->parent['indentField']);
     }
+    /**
+     * 循环数结构改为数组并且增加字段缩进
+     * 可以转化无限级树形结构为数组并且缩进
+     * $dataTree 数据
+     * $level 循环次数
+     * $indentField 缩进字段
+     */
     private function _toFormatTree($dataTree, $indentField, $level = 0)
     {
         $dataTree->map(function ($item, $key) use($dataTree,$indentField,$level) {
