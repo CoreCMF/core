@@ -32,7 +32,7 @@ class Model
     }
     // 分组
     public function group($group){
-        $this->group = $this->get('tabIndex',$group);
+        $this->group = $this->get('group',$group)? $this->get('group',$group): $this->get('tabIndex',$group);
         return $this;
     }
     public function parent($name, $parent, $indentField='name')
