@@ -30,9 +30,15 @@ class Model
         $this->orderBy['direction'] = $direction;
         return $this;
     }
-    // 分组
+    /**
+     * 分组
+     * group tabIndex 允许获取这两个post字段为分组
+     * tabIndex tabs的请求字段
+     * group 常规请求字段
+     */
     public function group($group){
-        $this->group = $this->get('group',$group)? $this->get('group',$group): $this->get('tabIndex',$group);
+        $requestGroup = $this->request->group? $this->request->group: $this->request->tabIndex;
+        $this->group = $requestGroup? $requestGroup: $group;
         return $this;
     }
     public function parent($name, $parent, $indentField='name')
