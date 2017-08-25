@@ -39,14 +39,18 @@ class Form
 
   public function __construct()
   {
-
+      $this->data = collect([]);//初始化集合
   }
 
   /**
    * [item 设置数据源]
    */
   public function item($item){
-      $this->data[] = $item;
+      $this->data->push($item);
+      return $this;
+  }
+  public function prependItem($item){
+      $this->data->prepend($item);
       return $this;
   }
   /**
@@ -63,24 +67,25 @@ class Form
    * loadAttribute 加载指定对象元素赋值 （最高支持二级对象）
    */
   public function itemData($Object){
-       foreach ($this->data as &$item) {
-              if (!isset($item['value'])) {
-                  @$item['value'] = $Object[$item['name']];
-              }
-              if (isset($item['loadAttribute'])) {
-                  $loadAttribute = collect($item['loadAttribute'])
-                      ->map(function ($value) {
-                          return explode('.',$value);
-                      });
-                  foreach ($loadAttribute as $key => $value) {
-                      if($key){
-                          @$item[$key] = $Object[$value[0]][$value[1]];
-                      }else{
-                          @$item['value'] = $Object[$value[0]][$value[1]];
-                      }
-                  }
-              }
-       }
+       $this->data->transform(function ($item) use($Object) {
+             if (!isset($item['value'])) {
+                 @$item['value'] = $Object[$item['name']];
+             }
+             if (isset($item['loadAttribute'])) {
+                 $loadAttribute = collect($item['loadAttribute'])
+                     ->map(function ($value) {
+                         return explode('.',$value);
+                     });
+                 foreach ($loadAttribute as $key => $value) {
+                     if($key){
+                         @$item[$key] = $Object[$value[0]][$value[1]];
+                     }else{
+                         @$item['value'] = $Object[$value[0]][$value[1]];
+                     }
+                 }
+             }
+            return $item;
+       });
        return $this;
   }
   /**
