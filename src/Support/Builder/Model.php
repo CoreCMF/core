@@ -216,6 +216,14 @@ class Model
         }
     }
     /**
+     * 数据保存
+     */
+    public function update($model,$name=null)
+    {
+        $input = $this->request->all();
+        return $model->find($this->request->id)->fill($input)->save();
+    }
+    /**
      * 数据批量删除
      */
     public function delete($model)
