@@ -74,8 +74,19 @@ class Model
         if ($this->pageSize) {
             $data['pageSize'] = $this->pageSize;
         }
-        $data['model'] = $this->modelData();
+        $modelData = $this->modelData();
+        if ($this->parent) {
+            $modelData = $this->toFormTree($modelData);
+        }
+        $data['model'] = $modelData;
         return $data;
+    }
+    /**
+     * 获取树形结构数据
+     */
+    public function getDataTree($model){
+        $this->model = $model;
+        return $this->dataToTree($this->modelData());
     }
     /**
      * 获取模型数据
@@ -99,9 +110,6 @@ class Model
         //懒惰渴求式加载关联数据
         if ($this->relations) {
             $modelData->load($this->relations);
-        }
-        if ($this->parent) {
-            $modelData = $this->toFormatTree($modelData);
         }
         return $modelData;
     }
@@ -133,10 +141,10 @@ class Model
         }
         return $data->count();
     }
-    private function toFormatTree($modelData)
+    private function toFormTree($modelData)
     {
         $dataTree= $this->dataToTree($modelData);
-        return $this->_toFormatTree($dataTree,$this->parent['indentField']);
+        return $this->_toFormTree($dataTree,$this->parent['indentField']);
     }
     /**
      * 循环数结构改为数组并且增加字段缩进
@@ -145,16 +153,16 @@ class Model
      * $level 循环次数
      * $indentField 缩进字段
      */
-    private function _toFormatTree($dataTree, $indentField, $level = 0)
+    private function _toFormTree($dataTree, $indentField, $level = 0)
     {
         $dataTree->map(function ($item, $key) use($dataTree,$indentField,$level) {
             $title_prefix = str_repeat("　", $level). "┝ ";
             $item->$indentField   = $level == 0 ? $item->$indentField : $title_prefix . $item->$indentField;
-            if ($item->subDatas) {
-                $subDatas = $item->subDatas;
-                unset($item->subDatas);//删除子类数据
+            if ($item->children) {
+                $children = $item->children;
+                unset($item->children);//删除子类数据
                 $this->mergeTree->push($item); //添加进合集
-                $this->_toFormatTree($subDatas, $indentField, $level+1);//循环子类
+                $this->_toFormTree($children, $indentField, $level+1);//循环子类
             }else{
                 $this->mergeTree->push($item); //添加进合集
             }
@@ -169,7 +177,7 @@ class Model
         return $modelData->filter(function ($data, $key) use($modelData) {
                     $parent = $this->parent['parent'];
                     if (empty($data->$parent)) {
-                        $data = $this->subDatas($data,$modelData);
+                        $data = $this->children($data,$modelData);
                     }
                     return $data->$parent == null;
                 });
@@ -177,17 +185,17 @@ class Model
     /**
      * 循环获取子数据(可无限级设置)]
      */
-    public function subDatas($data,$modelData){
-        $subDatas = $modelData->filter(function ($subData, $key) use($data,$modelData) {
+    public function children($data,$modelData){
+        $children = $modelData->filter(function ($subData, $key) use($data,$modelData) {
             $name = $this->parent['name'];
             $parent = $this->parent['parent'];
             if ($subData->$parent == $data->$name) {
-                $subData = $this->subDatas($subData,$modelData);
+                $subData = $this->children($subData,$modelData);
             }
             return $subData->$parent == $data->$name;
         });
-        if (!$subDatas->isEmpty()) {
-            $data->subDatas = $subDatas;
+        if (!$children->isEmpty()) {
+            $data->children = $children;
         }
         return $data;
     }
