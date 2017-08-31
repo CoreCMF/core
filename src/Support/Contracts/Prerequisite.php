@@ -1,5 +1,5 @@
 <?php
-namespace CoreCMF\core\Support\Contracts;
+namespace CoreCMF\Core\Support\Contracts;
 
 /**
  * Interface PrerequisiteContract.

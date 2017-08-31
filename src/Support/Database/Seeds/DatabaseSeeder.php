@@ -1,5 +1,5 @@
 <?php
-namespace CoreCMF\core\Support\Database\Seeds;
+namespace CoreCMF\Core\Support\Database\Seeds;
 
 use Illuminate\Database\Seeder;
 

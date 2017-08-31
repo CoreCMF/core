@@ -1,11 +1,11 @@
 <?php
 
-namespace CoreCMF\core\Commands;
+namespace CoreCMF\Core\Commands;
 
 use Artisan;
 use Illuminate\Console\Command;
 
-use CoreCMF\core\Support\Commands\Install;
+use CoreCMF\Core\Support\Commands\Install;
 
 class InstallCommand extends Command
 {
@@ -44,8 +44,8 @@ class InstallCommand extends Command
     {
         $this->info($this->install->migrate());
         $this->info($this->install->publish('core'));
-        $this->info($this->install->seed(\CoreCMF\core\Databases\seeds\RoleTableSeeder::class));
-        $this->info($this->install->seed(\CoreCMF\core\Databases\seeds\UploadTableSeeder::class));
+        $this->info($this->install->seed(\CoreCMF\Core\Databases\seeds\RoleTableSeeder::class));
+        $this->info($this->install->seed(\CoreCMF\Core\Databases\seeds\UploadTableSeeder::class));
         //安装passport
         $this->info('passport install');
         Artisan::call('passport:install');

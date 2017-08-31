@@ -1,10 +1,10 @@
 <?php
 
-namespace CoreCMF\core\Support\Commands;
+namespace CoreCMF\Core\Support\Commands;
 
 use Artisan;
 use Illuminate\Filesystem\Filesystem;
-use CoreCMF\core\Support\Database\Seeds\DatabaseSeeder;
+use CoreCMF\Core\Support\Database\Seeds\DatabaseSeeder;
 class Install
 {
     protected $fileSystem;

@@ -19,7 +19,7 @@ return [
     | the role if it is in a different namespace.
     |
     */
-    'role' => 'CoreCMF\core\Models\Role',
+    'role' => 'CoreCMF\Core\Models\Role',
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     | Update the User if it is in a different namespace.
     |
     */
-    'user' => 'CoreCMF\core\Models\User',
+    'user' => 'CoreCMF\Core\Models\User',
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return [
     | Update the permission if it is in a different namespace.
     |
     */
-    'permission' => 'CoreCMF\core\Models\Permission',
+    'permission' => 'CoreCMF\Core\Models\Permission',
 
     /*
     |--------------------------------------------------------------------------

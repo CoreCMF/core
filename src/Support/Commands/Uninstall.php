@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\core\Support\Commands;
+namespace CoreCMF\Core\Support\Commands;
 
 use DB;
 use Artisan;

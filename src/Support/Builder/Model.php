@@ -1,5 +1,5 @@
 <?php
-namespace CoreCMF\core\Support\Builder;
+namespace CoreCMF\Core\Support\Builder;
 
 class Model
 {

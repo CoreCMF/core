@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\core\Support\Http;
+namespace CoreCMF\Core\Support\Http;
 
 use Illuminate\Http\Request as laravelRequest;
 

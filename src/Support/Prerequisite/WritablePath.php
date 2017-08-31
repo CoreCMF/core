@@ -1,7 +1,7 @@
 <?php
-namespace CoreCMF\core\Support\Prerequisite;
+namespace CoreCMF\Core\Support\Prerequisite;
 
-use CoreCMF\core\Support\Abstracts\Prerequisite;
+use CoreCMF\Core\Support\Abstracts\Prerequisite;
 
 /**
  * Class WritablePath.

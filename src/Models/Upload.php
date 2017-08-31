@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\core\Models;
+namespace CoreCMF\Core\Models;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;

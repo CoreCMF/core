@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\core\Support;
+namespace CoreCMF\Core\Support;
 
 use Illuminate\Filesystem\Filesystem;
 

@@ -1,27 +1,27 @@
 <?php
 
-namespace CoreCMF\core;
+namespace CoreCMF\Core;
 
 use Route;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use CoreCMF\core\Support\Builder\Html as builderHtml;
-use CoreCMF\core\Support\Builder\Form as builderForm;
-use CoreCMF\core\Support\Builder\Table as builderTable;
-use CoreCMF\core\Support\Builder\Model as builderModel;
-use CoreCMF\core\Support\Contracts\Prerequisite;
-use CoreCMF\core\Support\Prerequisite\Composite;
-use CoreCMF\core\Support\Prerequisite\PhpExtension;
-use CoreCMF\core\Support\Prerequisite\PhpVersion;
-use CoreCMF\core\Support\Prerequisite\WritablePath;
+use CoreCMF\Core\Support\Builder\Html as builderHtml;
+use CoreCMF\Core\Support\Builder\Form as builderForm;
+use CoreCMF\Core\Support\Builder\Table as builderTable;
+use CoreCMF\Core\Support\Builder\Model as builderModel;
+use CoreCMF\Core\Support\Contracts\Prerequisite;
+use CoreCMF\Core\Support\Prerequisite\Composite;
+use CoreCMF\Core\Support\Prerequisite\PhpExtension;
+use CoreCMF\Core\Support\Prerequisite\PhpVersion;
+use CoreCMF\Core\Support\Prerequisite\WritablePath;
 
 class coreServiceProvider extends ServiceProvider
 {
     protected $commands = [
-        \CoreCMF\core\Commands\InstallCommand::class,
-        \CoreCMF\core\Commands\UninstallCommand::class,
+        \CoreCMF\Core\Commands\InstallCommand::class,
+        \CoreCMF\Core\Commands\UninstallCommand::class,
         \Laravel\Passport\Console\InstallCommand::class,
         \Laravel\Passport\Console\ClientCommand::class,
         \Laravel\Passport\Console\KeysCommand::class

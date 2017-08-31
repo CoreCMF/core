@@ -1,7 +1,7 @@
 <?php
-namespace CoreCMF\core\Support\Abstracts;
+namespace CoreCMF\Core\Support\Abstracts;
 
-use CoreCMF\core\Support\Contracts\Prerequisite as PrerequisiteContract;
+use CoreCMF\Core\Support\Contracts\Prerequisite as PrerequisiteContract;
 
 /**
  * Class Prerequisite.

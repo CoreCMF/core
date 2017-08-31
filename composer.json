@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "CoreCMF\\core\\": "src"
+            "CoreCMF\\Core\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CoreCMF\\core\\": "tests"
+            "CoreCMF\\Core\\": "tests"
         }
     },
     "scripts": {

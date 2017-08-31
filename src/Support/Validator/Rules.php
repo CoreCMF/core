@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\core\Support\Validator;
+namespace CoreCMF\Core\Support\Validator;
 
 
 class Rules

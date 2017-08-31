@@ -1,7 +1,7 @@
 <?php
-namespace CoreCMF\core\Support\Prerequisite;
+namespace CoreCMF\Core\Support\Prerequisite;
 
-use CoreCMF\core\Support\Contracts\Prerequisite;
+use CoreCMF\Core\Support\Contracts\Prerequisite;
 
 /**
  * Class Composite.
