@@ -45,6 +45,8 @@ class coreServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/vendor/' => public_path('vendor'),
         ], 'core');
+        // 添加Passport中间件
+        Route::pushMiddlewareToGroup('web', \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class);
         $this->initService();
     }
 
