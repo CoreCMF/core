@@ -15,7 +15,7 @@ class CoreUsersTable extends Migration
     {
         Schema::create('core_users', function (Blueprint $table) {
             $table->increments('id')            ->comment('用户ID');
-            $table->string('name')              ->comment('用户名')   ->unique();
+            $table->string('name')              ->comment('用户名')   ->unique()->nullable();
             $table->string('email')             ->comment('邮箱')     ->unique()->nullable();
             $table->bigInteger('mobile')        ->comment('用户手机')  ->unique()->nullable()->unsigned();
             $table->string('nickname')          ->comment('昵称')    ->nullable();
