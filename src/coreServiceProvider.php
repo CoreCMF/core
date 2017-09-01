@@ -94,6 +94,9 @@ class coreServiceProvider extends ServiceProvider
         //修改auth api 驱动
         config(['auth.guards.api.driver' => 'passport']);
     }
+    /**
+     * 注册引用服务
+     */
     public function registerProviders()
     {
         $providers = config('core.providers');
