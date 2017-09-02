@@ -22,7 +22,7 @@ class UploadTableSeeder extends Seeder
             'size' 		=> '89657',
             'md5' 		=> 'ab92a944e8a4846654efcf54d846e9ad',
             'sha1' 		=> '61c8f679b73ba9c6fc796b8b5cc03b79b2191d64',
-            'disk' 		=> 'local',
+            'driver' 		=> 'public',
             'download' 	=> 0,
             'status'  	=> 1,
             'sort' 	=> 0,
