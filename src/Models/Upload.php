@@ -2,8 +2,10 @@
 
 namespace CoreCMF\Core\Models;
 
+use File;
 use Auth;
 use Storage;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
 
@@ -83,18 +85,30 @@ class Upload extends Model
         'file.mimes' => '上传文件格式错误',
         'file.required' => '文件不存在',
     ];
-
+    /**
+     * [imageRemote 图片远程保存]
+     * @param  [type] $imageUrl [远程图片url]
+     * @param  [type] $path     [保存本地路径]
+     * @return [type]           [返回图片成功失败信息以及图片数据库信息]
+     */
+    public function imageRemote($imageUrl, $imageName ,$path=null)
+    {
+        $client = new Client();
+        $imageData = $client->request('get',$imageUrl)->getBody()->getContents();
+        $extension = strpos('.png.gif.jpeg.jpg.bmp',strrchr($imageUrl, "."))? $extension: 'jpg';//文件类型检测
+        return $this->storageFile($imageData, $imageName, 'images'.DIRECTORY_SEPARATOR.$path, $extension);//图片保存
+    }
     /**
      * [imageUpload 上传图片模型].
      */
-    public function imageUpload($imageData,$path=null)
+    public function imageUpload($image,$path=null)
     {
         /**
          * [$validator 验证图片格式].
          *
          * @var [type]
          */
-        $validator = Validator::make($imageData, self::$imageRules, self::$imageMessages);
+        $validator = Validator::make($image, self::$imageRules, self::$imageMessages);
         if ($validator->fails()) {
             return [
                 'error' => true,
@@ -102,7 +116,7 @@ class Upload extends Model
                 'code' => 400,
             ];
         }
-        $response = $this->upload($imageData, 'images'.DIRECTORY_SEPARATOR.$path);
+        $response = $this->upload($image, 'images'.DIRECTORY_SEPARATOR.$path);
 
         return $response;
     }
@@ -110,14 +124,14 @@ class Upload extends Model
     /**
      * [imageUpload 上传文件模型].
      */
-    public function fileUpload($fileData,$path=null)
+    public function fileUpload($file,$path=null)
     {
         /**
          * [$validator 验证文件格式].
          *
          * @var [type]
          */
-        $validator = Validator::make($fileData, $this->$fileRules, $this->$fileMessages);
+        $validator = Validator::make($file, $this->$fileRules, $this->$fileMessages);
         if ($validator->fails()) {
             return [
                 'error' => true,
@@ -125,74 +139,96 @@ class Upload extends Model
                 'code' => 400,
             ];
         }
-        $response = $this->upload($fileData, 'file'.DIRECTORY_SEPARATOR.$path);
+        $response = $this->upload($file, 'file'.DIRECTORY_SEPARATOR.$path);
 
         return $response;
     }
-
     /**
-     * [upload 上传模型].
+     * [upload 上传文件模型]
+     * @param  [type] $file [description]
+     * @param  [type] $path [description]
+     * @return [type]       [description]
      */
-    public function upload($fileData, $path)
+    public function upload($file, $path)
     {
-        //begin 获取上传文件数据
-        $fileRealPath = $fileData['file']->getRealPath();
-        $fileInfo['uid'] = Auth::id(); //后期必须验证用户ID
-        $fileInfo['size'] = $fileData['file']->getSize();
-        $fileInfo['name'] = $fileData['file']->getClientOriginalName();
-        $fileInfo['extension'] = $fileData['file']->getClientOriginalExtension();
-        $fileInfo['md5'] = md5_file($fileRealPath);
-        $fileInfo['sha1'] = sha1_file($fileRealPath);
-        $fileInfo['download'] = 0;
-        $fileInfo['status'] = 1;
-        $fileInfo['sort'] = 0;
-        $fileHashName = $fileInfo['md5'].'.'.$fileInfo['extension'];
-        $fileInfo['path'] = DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$fileHashName; //保存路径
-        $fileInfo['disk'] = 'public'; //存储方式
-        //end
-        //begin查询文件是否存在
-        $fileObject = $this->where('sha1', $fileInfo['sha1'])
-                            ->where('md5', $fileInfo['md5'])
-                            ->where('size', $fileInfo['size'])
-                            ->first(); //end
-        // 发现相同文件直接返回
+        $fileRealPath = $file['file']->getRealPath();
+        $fileName     = $file['file']->getClientOriginalName();
+        $extension    = $file['file']->getClientOriginalExtension();
+        return $this->storageFile(file_get_contents($fileRealPath), $fileName, $path, $extension);//存储文件
+    }
+    /**
+     * [storageFile 文件保存模型]
+     * @param  [type] $imageData [文件数据流]
+     * @param  [type] $path      [保存路径]
+     * @param  [type] $extension [保存类型]
+     * @return [type]            [返回图片成功失败信息以及图片数据库信息]
+     */
+    public function storageFile($fileData, $imageName, $path=null ,$extension)
+    {
+        $fileInfo['name']= $imageName;
+        $fileInfo['md5']= md5($fileData);
+        $fileInfo['sha1'] = sha1($fileData);
+        $fileInfo['size'] = strlen($fileData);
+        $fileInfo['extension'] = $extension;
+        $fileInfo['path'] = DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$fileInfo['md5'].'.'.$extension; //路径
+        $fileInfo['driver'] = 'public';//此处后期开发上传文件驱动选择 接口 创建监控事件
+        $fileInfo['url'] = $fileInfo['path'];
+
+        $fileObject = $this->checkFile($fileData, $fileInfo['md5'], $fileInfo['sha1']);//检查文件是否存在数据库中
         if ($fileObject) {
             return [
                 'title' => '上传成功',
-                'message' => '发现相同文件直接返回文件数据!',
+                'message' => '上传成功!发现相同文件直接返回存储文件数据!',
                 'uploadData' => $fileObject,
                 'type'      => 'success',
             ];
+        }else{
+            //保存文件
+            if ($this->putFile($fileData, $fileInfo['path'], $fileInfo['driver'])) {
+                $uploadObject = $this->createFileInfo($fileInfo);//文件信息写入数据库
+                return [
+                    'message' => '文件上传成功!',
+                    'uploadData' => $uploadObject,
+                    'type'      => 'success',
+                ];
+            }else{
+                return [
+                    'message' => '文件上传失败!不要问我为什么我也不知道!要不你问下程序猿？',
+                    'type'      => 'error',
+                ];
+            }
         }
-        $disk = Storage::disk($fileInfo['disk']);
-        $storage = $disk->put(
-            $fileInfo['path'],
-            file_get_contents($fileRealPath)
-        ); //保存文件
-        if ($storage) {
-            switch ($fileInfo['disk']) {
-                case 'public':
-                    $fileInfo['url'] = $fileInfo['path'];
-                    break;
-
-                default:
-                    // code...
-                    break;
-            }//根据存储方式设置URL地址
-            $uploadObject = $this->create($fileInfo); //把上传文件信息写入数据库
-            return [
-                'title' => '上传成功',
-                'message' => '文件上传成功!',
-                'uploadData' => $uploadObject,
-                'type'      => 'success',
-            ];
-        } else {
-            return [
-                'title' => '上传失败',
-                'message' => '文件上传失败!',
-                'type'      => 'error',
-            ];
-        }
+    }
+    /**
+     * [checkFile 检查文件是否存在]
+     * @param  [type] $fileData [文件数据流]
+     * @return [type]           [description]
+     */
+    public function checkFile($fileData, $md5, $sha1){
+        $fileObject = $this->where('md5', $md5)->where('sha1', $sha1)->first();
+        return $fileObject? $fileObject :false;
+    }
+    /**
+     * [putFile 增加保存文件]
+     * @param  [type] $fileData [文件数据流]
+     * @param  [type] $path     [文件路径]
+     * @return [type]           [description]
+     */
+    public function putFile($fileData, $path, $driver='public'){
+        return Storage::disk($driver)->put($path, $fileData); //保存文件
+    }
+    /**
+     * [createFileInfo 存储数据库文件信息]
+     * @param  [type] $fileInfo [description]
+     * @return [type]           [description]
+     */
+    public function createFileInfo($fileInfo)
+    {
+        $fileInfo['uid'] = Auth::id(); //后期必须验证用户ID
+        $fileInfo['download'] = 0;
+        $fileInfo['status'] = 1;
+        $fileInfo['sort'] = 0;
+        return $this->create($fileInfo); //把上传文件信息写入数据库
     }
     /**
      * [fileDelete 根据文件ID删除文件].
