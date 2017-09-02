@@ -93,10 +93,14 @@ class Upload extends Model
      */
     public function imageRemote($imageUrl, $imageName ,$path=null)
     {
-        $client = new Client();
-        $imageData = $client->request('get',$imageUrl)->getBody()->getContents();
-        $extension = strpos('.png.gif.jpeg.jpg.bmp',strrchr($imageUrl, "."))? $extension: 'jpg';//文件类型检测
-        return $this->storageFile($imageData, $imageName, 'images'.DIRECTORY_SEPARATOR.$path, $extension);//图片保存
+        try {
+            $client = new Client();
+            $imageData = $client->request('get',$imageUrl)->getBody()->getContents();
+            $extension = strpos('.png.gif.jpeg.jpg.bmp',strrchr($imageUrl, "."))? $extension: 'jpg';//文件类型检测
+            return $this->storageFile($imageData, $imageName, 'images'.DIRECTORY_SEPARATOR.$path, $extension);//图片保存
+        } catch (Exception $e) {
+            return;
+        }
     }
     /**
      * [imageUpload 上传图片模型].
