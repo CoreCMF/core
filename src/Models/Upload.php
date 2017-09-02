@@ -2,9 +2,10 @@
 
 namespace CoreCMF\Core\Models;
 
+use Auth;
+use Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
-use Storage;
 
 /**
  * Class Upload.
@@ -86,7 +87,7 @@ class Upload extends Model
     /**
      * [imageUpload 上传图片模型].
      */
-    public function imageUpload($imageData)
+    public function imageUpload($imageData,$path=null)
     {
         /**
          * [$validator 验证图片格式].
@@ -101,7 +102,7 @@ class Upload extends Model
                 'code' => 400,
             ];
         }
-        $response = $this->upload($imageData, 'images');
+        $response = $this->upload($imageData, 'images'.DIRECTORY_SEPARATOR.$path);
 
         return $response;
     }
@@ -109,7 +110,7 @@ class Upload extends Model
     /**
      * [imageUpload 上传文件模型].
      */
-    public function fileUpload($fileData)
+    public function fileUpload($fileData,$path=null)
     {
         /**
          * [$validator 验证文件格式].
@@ -124,7 +125,7 @@ class Upload extends Model
                 'code' => 400,
             ];
         }
-        $response = $this->upload($fileData, 'file');
+        $response = $this->upload($fileData, 'file'.DIRECTORY_SEPARATOR.$path);
 
         return $response;
     }
@@ -132,12 +133,11 @@ class Upload extends Model
     /**
      * [upload 上传模型].
      */
-    public function upload($fileData, $mimeType)
+    public function upload($fileData, $path)
     {
         //begin 获取上传文件数据
         $fileRealPath = $fileData['file']->getRealPath();
-        $fileHashName = $fileData['file']->hashName();
-        $fileInfo['uid'] = 0; //后期必须验证用户ID
+        $fileInfo['uid'] = Auth::id(); //后期必须验证用户ID
         $fileInfo['size'] = $fileData['file']->getSize();
         $fileInfo['name'] = $fileData['file']->getClientOriginalName();
         $fileInfo['extension'] = $fileData['file']->getClientOriginalExtension();
@@ -146,7 +146,8 @@ class Upload extends Model
         $fileInfo['download'] = 0;
         $fileInfo['status'] = 1;
         $fileInfo['sort'] = 0;
-        $fileInfo['path'] = DIRECTORY_SEPARATOR.$mimeType.DIRECTORY_SEPARATOR.$fileHashName; //保存路径
+        $fileHashName = $fileInfo['md5'].'.'.$fileInfo['extension'];
+        $fileInfo['path'] = DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$fileHashName; //保存路径
         $fileInfo['disk'] = 'public'; //存储方式
         //end
         //begin查询文件是否存在
