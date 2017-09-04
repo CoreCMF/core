@@ -11,6 +11,7 @@ use CoreCMF\Core\Support\Builder\Html as builderHtml;
 use CoreCMF\Core\Support\Builder\Form as builderForm;
 use CoreCMF\Core\Support\Builder\Table as builderTable;
 use CoreCMF\Core\Support\Builder\Model as builderModel;
+use CoreCMF\Core\Support\Builder\Asset as builderAsset;
 use CoreCMF\Core\Support\Contracts\Prerequisite;
 use CoreCMF\Core\Support\Prerequisite\Composite;
 use CoreCMF\Core\Support\Prerequisite\PhpExtension;
@@ -41,6 +42,8 @@ class coreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/Config/entrust.php', 'entrust');
         //迁移文件配置
         $this->loadMigrationsFrom(__DIR__.'/Databases/migrations');
+        //视图路由
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
         //设置发布前端文件
         $this->publishes([
             __DIR__.'/../resources/vendor/' => public_path('vendor'),
@@ -68,6 +71,9 @@ class coreServiceProvider extends ServiceProvider
       });
       $this->app->bind('builderModel', function () {
           return new builderModel();
+      });
+      $this->app->singleton('builderAsset', function () {
+          return new builderAsset();
       });
       $this->app->singleton(Prerequisite::class, function () {
           return new Composite(
