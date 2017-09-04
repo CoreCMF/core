@@ -2,6 +2,8 @@
 
 namespace CoreCMF\Core\Support\Builder;
 
+use CoreCMF\Core\Events\BuilderForm;
+
 class Form
 {
   private $type = 'form';
@@ -129,6 +131,8 @@ class Form
    */
   public function response()
   {
+      event(new BuilderForm($this)); //分发事件
+
       $this->response['type']       = $this->type;
       $this->response['tabs']       = $this->tabs;
       $this->response['defaultTabs']= $this->defaultTabs;
