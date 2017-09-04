@@ -7,6 +7,7 @@ use CoreCMF\Core\Events\BuilderForm;
 class Form
 {
   private $type = 'form';
+  public  $event;
   private $data;
   private $apiUrl;
   private $config;
@@ -43,7 +44,16 @@ class Form
   {
       $this->data = collect([]);//初始化集合
   }
-
+  /**
+   * [event 绑定form事件]
+   * @param  [type] $event [事件]
+   * @return [type]        [description]
+   */
+  public function event($event)
+  {
+    $this->event = $event;
+    return $this;
+  }
   /**
    * [item 设置数据源]
    */
