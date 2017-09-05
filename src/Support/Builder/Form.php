@@ -8,6 +8,8 @@ class Form
 {
   private $type = 'form';
   public  $event;
+  private $htmlEnd;
+  private $htmlBegin;
   private $data;
   private $apiUrl;
   private $config;
@@ -55,12 +57,35 @@ class Form
     return $this;
   }
   /**
+   * [htmlBegin 插入开头html]
+   * @param  [type] $html [description]
+   * @return [type]       [description]
+   */
+  public function htmlBegin($html){
+      $this->htmlBegin = $html;
+      return $this;
+  }
+  /**
+   * [htmlEnd 插入结尾html]
+   * @param  [type] $html [description]
+   * @return [type]       [description]
+   */
+  public function htmlEnd($html){
+      $this->htmlEnd = $html;
+      return $this;
+  }
+  /**
    * [item 设置数据源]
    */
   public function item($item){
       $this->data->push($item);
       return $this;
   }
+  /**
+   * [prependItem 插入项目开头]
+   * @param  [type] $item [description]
+   * @return [type]       [description]
+   */
   public function prependItem($item){
       $this->data->prepend($item);
       return $this;
@@ -150,6 +175,8 @@ class Form
       $this->response['apiUrl']     = $this->apiUrl;
       $this->response['config']     = $this->config;
       $this->response['rules']      = $this->rules;
+      $this->response['htmlEnd']    = $this->htmlEnd;
+      $this->response['htmlBegin']  = $this->htmlBegin;
 
       return $this->response;
   }
