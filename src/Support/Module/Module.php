@@ -1,14 +1,18 @@
 <?php
 
 namespace CoreCMF\Core\Support\Module;
+
+use CoreCMF\Core\Models\Module as moduleModule;
 use CoreCMF\Core\Support\Module\Psr4;
 
 class Module
 {
     protected $psr4;
-    public function __construct(Psr4 $psr4)
+    protected $moduleModel;
+    public function __construct(Psr4 $psr4,moduleModule $moduleRepo)
     {
         $this->psr4 = $psr4;
+        $this->moduleModel = $moduleRepo;
     }
 
     public function namespaceDir($namespace)
@@ -29,7 +33,7 @@ class Module
             $configDir = $namespaceDire.'/Config/config.php';
             if (is_file($configDir)) {
                 $config = include $configDir;
-                $this->install($config);
+                return $this->install($config);
             }else{
                 return [
                             'message'   => '未能找到插件配置文件!请确认您的插件包是否正确。',
@@ -50,6 +54,37 @@ class Module
      */
     public function install($config)
     {
-        dd($config);
+        $check = $this->checkConfig($config);
+        if ($check === true) {
+            $name = $this->moduleModel->where('name', $config['name'])->first();
+            $module = $this->moduleModel->create($config);
+                    dd($addon);
+        }else{
+            return [
+                      'message'   => $check,
+                      'type'      => 'warning',
+                  ];
+        }
     }
+    /**
+     * [checkConfig 检查配置文件参数]
+     * @param  [type] $config [description]
+     * @return [type]         [description]
+     */
+    public function checkConfig($config)
+    {
+        $status = false;
+        $message = '配置文件缺少下面参数';
+        $keys = ['name','title','description','author','version','serviceProvider'];
+        foreach ($keys as $key) {
+            if (array_key_exists($key,$config)) {
+                $status = true;
+            }else{
+                $message .= ' \''.$key.'\'';
+                $status = false;
+            }
+        }
+        return $status? true: $message;
+    }
+
 }
