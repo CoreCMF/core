@@ -56,9 +56,14 @@ class Module
     {
         $check = $this->checkConfig($config);
         if ($check === true) {
-            $name = $this->moduleModel->where('name', $config['name'])->first();
-            $module = $this->moduleModel->create($config);
-                    dd($addon);
+            if (empty($this->moduleModel->checkName($config['name']))) {
+                $module = $this->moduleModel->create($config);
+            }else{
+                return [
+                          'message'   => '模块插件已存在请勿重复安装.',
+                          'type'      => 'warning',
+                      ];
+            }
         }else{
             return [
                       'message'   => $check,

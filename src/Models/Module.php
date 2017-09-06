@@ -8,6 +8,11 @@ class Module extends Model
 {
     public $table = 'core_modules';
 
-    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'provider'];
+    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'serviceProvider'];
+
+    public function checkName($name)
+    {
+        return $this->where('name', $name)->first();
+    }
 
 }
