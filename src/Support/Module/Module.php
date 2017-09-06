@@ -2,6 +2,7 @@
 
 namespace CoreCMF\Core\Support\Module;
 
+use Artisan;
 use CoreCMF\Core\Models\Module as moduleModule;
 use CoreCMF\Core\Support\Module\Psr4;
 
@@ -57,7 +58,12 @@ class Module
         $check = $this->checkConfig($config);
         if ($check === true) {
             if (empty($this->moduleModel->checkName($config['name']))) {
-                $module = $this->moduleModel->create($config);
+                $this->moduleModel->create($config);
+                Artisan::call($config['install']);//通过artisan命令安装模块
+                return [
+                          'message'   => '模块安装成功.',
+                          'type'      => 'success',
+                      ];
             }else{
                 return [
                           'message'   => '模块插件已存在请勿重复安装.',
