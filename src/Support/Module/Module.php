@@ -59,6 +59,7 @@ class Module
         if ($check === true) {
             if (empty($this->moduleModel->checkName($config['name']))) {
                 $this->moduleModel->create($config);
+                app()->register($config['serviceProvider']);//注册服务
                 Artisan::call($config['install']);//通过artisan命令安装模块
                 return [
                           'message'   => '模块安装成功.',
