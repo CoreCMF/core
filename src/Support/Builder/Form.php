@@ -8,15 +8,15 @@ class Form
 {
   private $type = 'form';
   public  $event;
-  public $htmlEnd;
-  public $htmlBegin;
-  public $data;
-  public $apiUrl;
-  public $config;
-  public $rules;
-  public $tabs;
-  public $defaultTabs;
-  public $response;
+  public  $htmlEnd;
+  public  $htmlBegin;
+  public  $data;
+  public  $apiUrl;
+  public  $config;
+  public  $rules;
+  public  $tabs;
+  public  $defaultTabs;
+  public  $response;
   public  $itemType = [
           'hidden'     => '隐藏',
           'static'     => '不可修改文本',

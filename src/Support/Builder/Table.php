@@ -2,25 +2,38 @@
 
 namespace CoreCMF\Core\Support\Builder;
 
+use CoreCMF\Core\Events\BuilderTable;
+
 class Table
 {
   private $type = 'table';
-  private $stripe = true;
-  private $tabs;
-  private $defaultTabs;
-  private $data;
-  private $column;
-  private $topButton;
-  private $rightButton;
-  private $pagination;
-  private $searchTitle;
-  private $searchSelect;
+  public  $event;
+  public  $stripe = true;
+  public  $tabs;
+  public  $defaultTabs;
+  public  $data;
+  public  $column;
+  public  $topButton;
+  public  $rightButton;
+  public  $pagination;
+  public  $searchTitle;
+  public  $searchSelect;
   /**
    * Create a new Skeleton Instance
    */
   public function __construct()
   {
 
+  }
+  /**
+   * [event 绑定form事件]
+   * @param  [type] $event [事件]
+   * @return [type]        [description]
+   */
+  public function event($event)
+  {
+    $this->event = $event;
+    return $this;
   }
   /**
    * [tabs description]
@@ -81,6 +94,8 @@ class Table
    */
   public function response()
   {
+      event(new BuilderTable($this)); //分发事件
+
       $response['type']       = $this->type;
       $response['stripe']     = $this->stripe;
       $response['tabs']       = $this->tabs;
