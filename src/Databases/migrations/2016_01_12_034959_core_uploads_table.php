@@ -16,7 +16,7 @@ public function up()
 {
     Schema::create('core_uploads', function (Blueprint $table) {
         $table->increments('id');
-        $table->bigInteger('uid')           ->comment('用户ID')->unsigned();
+        $table->bigInteger('uid')           ->comment('用户ID')->default(0)->unsigned();
         $table->string('name')              ->comment('文件名称');
         $table->string('path')              ->comment('文件路径');
         $table->string('url')               ->comment('文件链接');

@@ -18,7 +18,6 @@ class Upload extends Model
     public $table = 'core_uploads';
 
     public $fillable = [
-        'uid',
         'name',
         'path',
         'url',
@@ -26,7 +25,7 @@ class Upload extends Model
         'size',
         'md5',
         'sha1',
-        'disk',
+        'driver',
         'download',
         'sort',
         'status',
