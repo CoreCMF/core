@@ -2,6 +2,7 @@
 
 namespace CoreCMF\Core\Models;
 
+use Schema;
 use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
@@ -20,13 +21,18 @@ class Module extends Model
     }
     /**
      * [providers 获取服务提供者类文件]
+     * hasTable 检查数据表是否存在--否则安装的时候会报错
      * @return [type] [description]
      */
     public function providers()
     {
-        $Modules = $this->all();
-        return $Modules->map(function ($module) {
-            return $module->serviceProvider;
-        })->toArray();
+        if (Schema::hasTable('core_modules')) {
+            $Modules = $this->all();
+            return $Modules->map(function ($module) {
+                return $module->serviceProvider;
+            })->toArray();
+        }else{
+            return [];
+        }
     }
 }
