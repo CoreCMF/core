@@ -1,13 +1,12 @@
 <?php
 
-namespace CoreCMF\Core\Support\Module;
+namespace CoreCMF\Core\Support\Package;
 
+/**
+ * [Psr4 Psr4命名空间解析]
+ */
 class Psr4
 {
-    public function __construct()
-    {
-    }
-
     public function namespaceDir($namespace)
     {
         $psr4 = require base_path().'/vendor/composer/autoload_psr4.php';

@@ -1,19 +1,19 @@
 <?php
 
-namespace CoreCMF\Core\Support\Module;
+namespace CoreCMF\Core\Support\Package;
 
 use Artisan;
-use CoreCMF\Core\Models\Module as moduleModule;
-use CoreCMF\Core\Support\Module\Psr4;
+use CoreCMF\Core\Models\Package;
+use CoreCMF\Core\Support\Package\Psr4;
 
-class Module
+class Install
 {
     protected $psr4;
-    protected $moduleModel;
-    public function __construct(Psr4 $psr4,moduleModule $moduleRepo)
+    protected $packageModel;
+    public function __construct(Psr4 $psr4,Package $packageRepo)
     {
         $this->psr4 = $psr4;
-        $this->moduleModel = $moduleRepo;
+        $this->packageModel = $packageRepo;
     }
 
     public function namespaceDir($namespace)
@@ -57,8 +57,8 @@ class Module
     {
         $check = $this->checkConfig($config);
         if ($check === true) {
-            if (empty($this->moduleModel->checkName($config['name']))) {
-                $this->moduleModel->create($config);
+            if (empty($this->packageModel->checkName($config['name']))) {
+                $this->packageModel->create($config);
                 app()->register($config['serviceProvider']);//注册服务
                 Artisan::call($config['install']);//通过artisan命令安装模块
                 return [

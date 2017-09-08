@@ -5,9 +5,9 @@ namespace CoreCMF\Core\Models;
 use Schema;
 use Illuminate\Database\Eloquent\Model;
 
-class Module extends Model
+class Package extends Model
 {
-    public $table = 'core_modules';
+    public $table = 'core_packages';
 
     protected $fillable = ['name', 'title', 'description', 'author', 'version', 'serviceProvider'];
     /**
@@ -26,10 +26,10 @@ class Module extends Model
      */
     public function providers()
     {
-        if (Schema::hasTable('core_modules')) {
-            $Modules = $this->all();
-            return $Modules->map(function ($module) {
-                return $module->serviceProvider;
+        if (Schema::hasTable('core_packages')) {
+            $Packages = $this->all();
+            return $Packages->map(function ($package) {
+                return $package->serviceProvider;
             })->toArray();
         }else{
             return [];

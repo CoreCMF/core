@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CoreModulesTable extends Migration
+class CorePackagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CoreModulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('core_modules', function (Blueprint $table) {
+        Schema::create('core_packages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',64)             ->comment('标识')->unique();
             $table->string('title',64)            ->comment('名称');
@@ -34,6 +34,6 @@ class CoreModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('core_modules');
+        Schema::dropIfExists('core_packages');
     }
 }

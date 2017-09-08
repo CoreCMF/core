@@ -17,7 +17,7 @@ use CoreCMF\Core\Support\Prerequisite\Composite;
 use CoreCMF\Core\Support\Prerequisite\PhpExtension;
 use CoreCMF\Core\Support\Prerequisite\PhpVersion;
 use CoreCMF\Core\Support\Prerequisite\WritablePath;
-use CoreCMF\Core\Models\Module;
+use CoreCMF\Core\Models\Package;
 
 class coreServiceProvider extends ServiceProvider
 {
@@ -108,9 +108,9 @@ class coreServiceProvider extends ServiceProvider
      */
     public function registerProviders()
     {
-        $module = new Module();
+        $package = new Package();
         //合并core配置的服务器提供者和模块的服务提供者
-        $providers = array_merge(config('core.providers'),$module->providers());
+        $providers = array_merge(config('core.providers'),$package->providers());
         foreach ($providers as $provider) {
             $this->app->register($provider);
         }
