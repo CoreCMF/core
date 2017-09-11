@@ -95,7 +95,7 @@ class Upload extends Model
         try {
             $client = new Client();
             $imageData = $client->request('get',$imageUrl)->getBody()->getContents();
-            $extension = strpos('.png.gif.jpeg.jpg.bmp',strrchr($imageUrl, "."))? $extension: 'jpg';//文件类型检测
+            $extension = strpos('.png.gif.jpeg.jpg.bmp',strrchr($imageUrl, "."))? strrchr($imageUrl, "."): 'jpg';//文件类型检测
             return $this->storageFile($imageData, $imageName, 'images'.DIRECTORY_SEPARATOR.$path, $extension);//图片保存
         } catch (Exception $e) {
             return;
