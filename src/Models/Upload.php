@@ -20,12 +20,11 @@ class Upload extends Model
     public $fillable = [
         'name',
         'path',
-        'url',
         'extension',
         'size',
         'md5',
         'sha1',
-        'driver',
+        'disk',
         'download',
         'sort',
         'status',
@@ -84,6 +83,17 @@ class Upload extends Model
         'file.mimes' => '上传文件格式错误',
         'file.required' => '文件不存在',
     ];
+
+    protected $appends = ['url'];
+
+    /**
+     * [getUrlAttribute 根据驱动 通过path获取图片url]
+     * @return [type] [description]
+     */
+    public function getUrlAttribute()
+    {
+        return Storage::disk($this->attributes['disk'])->url($this->attributes['path']);
+    }
     /**
      * [imageRemote 图片远程保存]
      * @param  [type] $imageUrl [远程图片url]
@@ -174,7 +184,7 @@ class Upload extends Model
         $fileInfo['size'] = strlen($fileData);
         $fileInfo['extension'] = $extension;
         $fileInfo['path'] = DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$fileInfo['md5'].'.'.$extension; //路径
-        $fileInfo['driver'] = config('filesystems.default');//此处后期开发上传文件驱动选择 接口 创建监控事件
+        $fileInfo['disk'] = config('filesystems.default');//此处后期开发上传文件驱动选择 接口 创建监控事件
 
         $fileObject = $this->checkFile($fileData, $fileInfo['md5'], $fileInfo['sha1']);//检查文件是否存在数据库中
         if ($fileObject) {
@@ -187,7 +197,7 @@ class Upload extends Model
         }else{
             //保存文件
             if ($this->putFile($fileData, $fileInfo['path'])) {
-                $fileInfo['url'] = Storage::url($fileInfo['path']);//获取访问url
+                // $fileInfo['url'] = Storage::url($fileInfo['path']);//获取访问url
                 $uploadObject = $this->createFileInfo($fileInfo);//文件信息写入数据库
                 return [
                     'message' => '文件上传成功!',
