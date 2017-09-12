@@ -93,6 +93,8 @@ class coreServiceProvider extends ServiceProvider
         config(['auth.providers.users.model' => Models\User::class]);
         //注册Passport
         $this->registerPassport();
+        //更改默认上传驱动为public
+        config(['filesystems.default' => 'public']);
     }
     public function registerPassport()
     {

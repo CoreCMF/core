@@ -174,8 +174,7 @@ class Upload extends Model
         $fileInfo['size'] = strlen($fileData);
         $fileInfo['extension'] = $extension;
         $fileInfo['path'] = DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$fileInfo['md5'].'.'.$extension; //路径
-        $fileInfo['driver'] = 'public';//此处后期开发上传文件驱动选择 接口 创建监控事件
-        $fileInfo['url'] = $fileInfo['path'];
+        $fileInfo['driver'] = config('filesystems.default');//此处后期开发上传文件驱动选择 接口 创建监控事件
 
         $fileObject = $this->checkFile($fileData, $fileInfo['md5'], $fileInfo['sha1']);//检查文件是否存在数据库中
         if ($fileObject) {
@@ -187,7 +186,8 @@ class Upload extends Model
             ];
         }else{
             //保存文件
-            if ($this->putFile($fileData, $fileInfo['path'], $fileInfo['driver'])) {
+            if ($this->putFile($fileData, $fileInfo['path'])) {
+                $fileInfo['url'] = Storage::url($fileInfo['path']);//获取访问url
                 $uploadObject = $this->createFileInfo($fileInfo);//文件信息写入数据库
                 return [
                     'message' => '文件上传成功!',
@@ -217,8 +217,8 @@ class Upload extends Model
      * @param  [type] $path     [文件路径]
      * @return [type]           [description]
      */
-    public function putFile($fileData, $path, $driver='public'){
-        return Storage::disk($driver)->put($path, $fileData); //保存文件
+    public function putFile($fileData, $path){
+        return Storage::put($path, $fileData); //保存文件
     }
     /**
      * [createFileInfo 存储数据库文件信息]
