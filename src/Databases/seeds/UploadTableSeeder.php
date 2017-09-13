@@ -16,7 +16,7 @@ class UploadTableSeeder extends Seeder
         DB::table('core_uploads')->insert([
             'uid' 	    => 0,
             'name' 		=> 'avatar.jpeg',
-            'path' 		=> '/vendor/core/img/avatar.jpeg',
+            'path' 		=> '/core/img/avatar.jpeg',
             'extension' => 'jpg',
             'size' 		=> '89657',
             'md5' 		=> 'ab92a944e8a4846654efcf54d846e9ad',

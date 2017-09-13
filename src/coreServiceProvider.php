@@ -47,7 +47,7 @@ class coreServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
         //设置发布前端文件
         $this->publishes([
-            __DIR__.'/../resources/vendor/' => public_path('vendor'),
+            __DIR__.'/../resources/storage/' => public_path('storage'),
         ], 'core');
         $this->initService();
     }

@@ -274,7 +274,7 @@ class Upload extends Model
         if (!$uploadObject) {
             $uploadObject = (object) [
                 'name' => '未找到图片',
-                'url' => asset('vendor/core/img/404.jpg'),
+                'url' => asset('storage/core/img/404.jpg'),
             ];
         }
 
