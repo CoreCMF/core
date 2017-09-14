@@ -183,7 +183,7 @@ class Upload extends Model
         $fileInfo['sha1'] = sha1($fileData);
         $fileInfo['size'] = strlen($fileData);
         $fileInfo['extension'] = $extension;
-        $fileInfo['path'] = DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$fileInfo['md5'].'.'.$extension; //路径
+        $fileInfo['path'] = $path.DIRECTORY_SEPARATOR.$fileInfo['md5'].'.'.$extension; //路径
         $fileInfo['disk'] = config('filesystems.default');//此处后期开发上传文件驱动选择 接口 创建监控事件
 
         $fileObject = $this->checkFile($fileData, $fileInfo['md5'], $fileInfo['sha1']);//检查文件是否存在数据库中
