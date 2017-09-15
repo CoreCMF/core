@@ -27,7 +27,7 @@ class Package extends Model
     public function providers()
     {
         if (Schema::hasTable('core_packages')) {
-            $Packages = $this->all();
+            $Packages = $this->where('status',1)->get();
             return $Packages->map(function ($package) {
                 return $package->serviceProvider;
             })->toArray();
