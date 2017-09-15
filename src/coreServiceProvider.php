@@ -110,9 +110,13 @@ class coreServiceProvider extends ServiceProvider
      */
     public function registerProviders()
     {
-        $package = new Package();
-        //合并core配置的服务器提供者和模块的服务提供者
-        $providers = array_merge(config('core.providers'),$package->providers());
+        if ($this->isInstalled()) {
+            $package = new Package();
+            //合并core配置的服务器提供者和模块的服务提供者
+            $providers = array_merge(config('core.providers'),$package->providers());
+        }else{
+            $providers = config('core.providers');
+        }
         foreach ($providers as $provider) {
             $this->app->register($provider);
         }
@@ -123,5 +127,18 @@ class coreServiceProvider extends ServiceProvider
         //注册跨域控制中间件
         $this->app->make(\Illuminate\Contracts\Http\Kernel::class)
                   ->pushMiddleware(Http\Middleware\Cors::class);
+    }
+    /**
+     * Get application installation status.
+     *
+     * @return bool
+     */
+    public function isInstalled()
+    {
+        if (!file_exists(storage_path() . DIRECTORY_SEPARATOR . 'installed')) {
+            return false;
+        }else{
+            return true;
+        }
     }
 }
