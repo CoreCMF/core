@@ -9,7 +9,7 @@ class Package extends Model
 {
     public $table = 'core_packages';
 
-    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'serviceProvider'];
+    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'serviceProvider','uninstall'];
     /**
      * [checkName 检查模块是否存在]
      * @param  [type] $name [description]
