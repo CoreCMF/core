@@ -90,7 +90,7 @@ class coreServiceProvider extends ServiceProvider
         //注册providers服务
         $this->registerProviders();
         //设置user模型位置
-        config(['auth.providers.users.model' => Models\User::class]);
+        config(['auth.providers.users.model' => Http\Models\User::class]);
         //注册Passport
         $this->registerPassport();
         //更改默认上传驱动为public
