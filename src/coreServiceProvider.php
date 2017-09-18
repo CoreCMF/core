@@ -7,6 +7,7 @@ use Laravel\Passport\Passport;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use CoreCMF\Core\Support\Builder\Main as builderMain;
 use CoreCMF\Core\Support\Builder\Html as builderHtml;
 use CoreCMF\Core\Support\Builder\Form as builderForm;
 use CoreCMF\Core\Support\Builder\Table as builderTable;
@@ -61,6 +62,9 @@ class coreServiceProvider extends ServiceProvider
     {
       $this->middleware();
 
+      $this->app->bind('builderMain', function () {
+          return new builderMain();
+      });
       $this->app->bind('builderHtml', function () {
           return new builderHtml();
       });
