@@ -2,6 +2,8 @@
 
 namespace CoreCMF\Core\Support\Builder;
 
+use CoreCMF\Core\Support\Events\BuilderMain;
+
 class Main
 {
     private $type = 'main';
@@ -18,7 +20,16 @@ class Main
     {
 
     }
-
+    /**
+     * [event 绑定fMain事件]
+     * @param  [type] $event [事件]
+     * @return [type]        [description]
+     */
+    public function event($event)
+    {
+      $this->event = $event;
+      return $this;
+    }
     /**
      * [route 设置路由参数]
      * @param    [type]                   $path   [前端路由路径]
@@ -128,6 +139,8 @@ class Main
      */
     public function response()
     {
+        event(new BuilderMain($this)); //分发事件
+
         $this->response['type']   = $this->type;
         $this->response['routes'] = $this->routes;
         $this->response['config'] = $this->config;

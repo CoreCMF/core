@@ -9,8 +9,10 @@ class UserInfo extends Model
     public $table = 'core_user_infos';
 
     protected $fillable = [
-        'avatar', 'integral', 'money'
+        'avatar', 'integral'
     ];
+    protected $guarded = ['money'];
+
     public $timestamps = false;
 
     protected $appends = ['avatarUrl'];
