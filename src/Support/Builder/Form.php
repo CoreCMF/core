@@ -2,7 +2,7 @@
 
 namespace CoreCMF\Core\Support\Builder;
 
-use CoreCMF\Core\Events\BuilderForm;
+use CoreCMF\Core\Support\Events\BuilderForm;
 
 class Form
 {

@@ -2,7 +2,7 @@
 
 namespace CoreCMF\Core\Support\Builder;
 
-use CoreCMF\Core\Events\BuilderTable;
+use CoreCMF\Core\Support\Events\BuilderTable;
 
 class Table
 {

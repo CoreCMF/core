@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\Core\Events;
+namespace CoreCMF\Core\Support\Events;
 
 use Illuminate\Queue\SerializesModels;
 
