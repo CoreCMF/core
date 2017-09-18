@@ -7,6 +7,7 @@ use CoreCMF\Core\Support\Events\BuilderMain;
 class Main
 {
     private $type = 'main';
+    private $event;
     private $routes = [];
     private $config;
     private $apiUrl;
@@ -39,13 +40,14 @@ class Main
      * @return   [type]                           [description]
      */
     public function route($array){
-        return $this->routes[] = [
+        $this->routes[] = [
           'path'    =>$array['path'],
           'name'    =>$array['name'],
           'meta'    =>[ 'apiUrl' => $array['apiUrl'] ],
           'children'=>$array['children'],
           'component'=>[ 'template'=> $array['component'] ],
         ];
+        return $this;
     }
 
     /**
@@ -54,7 +56,8 @@ class Main
      * @return   [type]                           [description]
      */
     public function routes($routes){
-        return $this->routes = array_merge($this->routes, $routes);
+        $this->routes = array_merge($this->routes, $routes);
+        return $this;
     }
     /**
      * [setRouteComponent 批量设置路由 $component]
@@ -73,7 +76,8 @@ class Main
      * @return   [type]                           [description]
      */
     public function topNav($topNav){
-        return $this->topNavs[$topNav['name']] = $topNav;
+        $this->topNavs[$topNav['name']] = $topNav;
+        return $this;
     }
     /**
      * [setMenus 批量设置导航菜单]
@@ -89,7 +93,8 @@ class Main
             }
             return $menu->parent == null;
         });
-        return $this->menus  = $menus;
+        $this->menus  = $menus;
+        return $this;
     }
 
     /**
@@ -119,7 +124,8 @@ class Main
      */
     public function config($key,$value)
     {
-        return $this->config[$key] = $value;
+        $this->config[$key] = $value;
+        return $this;
     }
 
     /**
@@ -130,7 +136,8 @@ class Main
      */
     public function apiUrl($key,$value)
     {
-        return $this->apiUrl[$key] = $value;
+        $this->apiUrl[$key] = $value;
+        return $this;
     }
 
     /**
