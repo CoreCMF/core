@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\Core\Http\Console;
+namespace CoreCMF\Core\App\Console;
 
 use Artisan;
 use Illuminate\Console\Command;

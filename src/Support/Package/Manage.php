@@ -3,7 +3,7 @@
 namespace CoreCMF\Core\Support\Package;
 
 use Artisan;
-use CoreCMF\Core\Http\Models\Package;
+use CoreCMF\Core\App\Models\Package;
 use CoreCMF\Core\Support\Package\Psr4;
 
 class Manage

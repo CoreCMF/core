@@ -1,8 +1,8 @@
 <?php
 
-namespace CoreCMF\Core\Http\Models;
+namespace CoreCMF\Core\App\Models;
 use Illuminate\Database\Eloquent\Model;
-use CoreCMF\Core\Http\Models\Upload;
+use CoreCMF\Core\App\Models\Upload;
 
 class UserInfo extends Model
 {

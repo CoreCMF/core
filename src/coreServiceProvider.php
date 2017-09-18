@@ -18,13 +18,13 @@ use CoreCMF\Core\Support\Prerequisite\Composite;
 use CoreCMF\Core\Support\Prerequisite\PhpExtension;
 use CoreCMF\Core\Support\Prerequisite\PhpVersion;
 use CoreCMF\Core\Support\Prerequisite\WritablePath;
-use CoreCMF\Core\Http\Models\Package;
+use CoreCMF\Core\App\Models\Package;
 
 class coreServiceProvider extends ServiceProvider
 {
     protected $commands = [
-        \CoreCMF\Core\Http\Console\InstallCommand::class,
-        \CoreCMF\Core\Http\Console\UninstallCommand::class,
+        \CoreCMF\Core\App\Console\InstallCommand::class,
+        \CoreCMF\Core\App\Console\UninstallCommand::class,
         \Laravel\Passport\Console\InstallCommand::class,
         \Laravel\Passport\Console\ClientCommand::class,
         \Laravel\Passport\Console\KeysCommand::class
@@ -94,7 +94,7 @@ class coreServiceProvider extends ServiceProvider
         //注册providers服务
         $this->registerProviders();
         //设置user模型位置
-        config(['auth.providers.users.model' => Http\Models\User::class]);
+        config(['auth.providers.users.model' => App\Models\User::class]);
         //注册Passport
         $this->registerPassport();
         //更改默认上传驱动为public
@@ -130,7 +130,7 @@ class coreServiceProvider extends ServiceProvider
     {
         //注册跨域控制中间件
         $this->app->make(\Illuminate\Contracts\Http\Kernel::class)
-                  ->pushMiddleware(Http\Middleware\Cors::class);
+                  ->pushMiddleware(App\Http\Middleware\Cors::class);
     }
     /**
      * Get application installation status.
