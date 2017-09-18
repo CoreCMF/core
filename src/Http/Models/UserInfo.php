@@ -2,7 +2,7 @@
 
 namespace CoreCMF\Core\Http\Models;
 use Illuminate\Database\Eloquent\Model;
-use CoreCMF\Core\Models\Upload;
+use CoreCMF\Core\Http\Models\Upload;
 
 class UserInfo extends Model
 {

@@ -17,7 +17,7 @@ use CoreCMF\Core\Support\Prerequisite\Composite;
 use CoreCMF\Core\Support\Prerequisite\PhpExtension;
 use CoreCMF\Core\Support\Prerequisite\PhpVersion;
 use CoreCMF\Core\Support\Prerequisite\WritablePath;
-use CoreCMF\Core\Models\Package;
+use CoreCMF\Core\Http\Models\Package;
 
 class coreServiceProvider extends ServiceProvider
 {
