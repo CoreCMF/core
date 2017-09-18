@@ -1,6 +1,6 @@
 <?php
 
-namespace CoreCMF\Core\Models;
+namespace CoreCMF\Core\Http\Models;
 
 use Laravel\Passport\HasApiTokens;
 use Zizaco\Entrust\Traits\EntrustUserTrait;

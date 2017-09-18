@@ -22,8 +22,8 @@ use CoreCMF\Core\Models\Package;
 class coreServiceProvider extends ServiceProvider
 {
     protected $commands = [
-        \CoreCMF\Core\Commands\InstallCommand::class,
-        \CoreCMF\Core\Commands\UninstallCommand::class,
+        \CoreCMF\Core\Http\Console\InstallCommand::class,
+        \CoreCMF\Core\Http\Console\UninstallCommand::class,
         \Laravel\Passport\Console\InstallCommand::class,
         \Laravel\Passport\Console\ClientCommand::class,
         \Laravel\Passport\Console\KeysCommand::class

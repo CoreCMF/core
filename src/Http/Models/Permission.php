@@ -1,5 +1,5 @@
 <?php
-namespace CoreCMF\Core\Models;
+namespace CoreCMF\Core\Http\Models;
 
 use Zizaco\Entrust\EntrustPermission;
 
