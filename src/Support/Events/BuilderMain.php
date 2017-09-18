@@ -8,7 +8,7 @@ class BuilderMain
 {
     use SerializesModels;
 
-    public $form;
+    public $main;
 
     /**
      * 创建一个新的事件实例.
