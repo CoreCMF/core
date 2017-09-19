@@ -68,6 +68,7 @@ class Main
     public function setRouteComponent($routes,$component){
         foreach ($routes as $key => &$route) {
             $route['component'] = [ 'template'=> $component ];
+            $route = collect($route);
         }
         return collect($routes);
     }
