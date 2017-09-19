@@ -19,7 +19,7 @@ class Main
      */
     public function __construct()
     {
-
+        $this->menus = collect();
     }
     /**
      * [event 绑定fMain事件]
@@ -80,6 +80,15 @@ class Main
         return $this;
     }
     /**
+     * [addMenus 增加菜单]
+     * @param  [type] $menus [description]
+     * @return [type]        [description]
+     */
+    public function addMenus($menus)
+    {
+        $this->menus = $this->menus->merge($menus);
+    }
+    /**
      * [setMenus 批量设置导航菜单]
      * @param    [type]                   $menus [description]
      */
@@ -93,7 +102,7 @@ class Main
             }
             return $menu->parent == null;
         });
-        $this->menus  = $menus;
+        $this->addMenus($menus);
         return $this;
     }
 
