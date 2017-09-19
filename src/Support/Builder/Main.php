@@ -41,13 +41,13 @@ class Main
      * @return   [type]                           [description]
      */
     public function route($array){
-        $this->routes->push([
+        $this->routes->push(collect([
             'path'    =>$array['path'],
             'name'    =>$array['name'],
             'meta'    =>[ 'apiUrl' => $array['apiUrl'] ],
             'children'=>$array['children'],
             'component'=>[ 'template'=> $array['component'] ],
-        ]);
+        ]));
         return $this;
     }
 
@@ -69,7 +69,7 @@ class Main
         foreach ($routes as $key => &$route) {
             $route['component'] = [ 'template'=> $component ];
         }
-        return $routes;
+        return collect($routes);
     }
     /**
      * [topNav 设置顶部导航]
