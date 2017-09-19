@@ -20,6 +20,7 @@ class Main
     public function __construct()
     {
         $this->menus = collect();
+        $this->routes = collect();
     }
     /**
      * [event 绑定fMain事件]
@@ -40,13 +41,13 @@ class Main
      * @return   [type]                           [description]
      */
     public function route($array){
-        $this->routes[] = [
-          'path'    =>$array['path'],
-          'name'    =>$array['name'],
-          'meta'    =>[ 'apiUrl' => $array['apiUrl'] ],
-          'children'=>$array['children'],
-          'component'=>[ 'template'=> $array['component'] ],
-        ];
+        $this->routes->push([
+            'path'    =>$array['path'],
+            'name'    =>$array['name'],
+            'meta'    =>[ 'apiUrl' => $array['apiUrl'] ],
+            'children'=>$array['children'],
+            'component'=>[ 'template'=> $array['component'] ],
+        ]);
         return $this;
     }
 
@@ -56,7 +57,7 @@ class Main
      * @return   [type]                           [description]
      */
     public function routes($routes){
-        $this->routes = array_merge($this->routes, $routes);
+        $this->routes = $this->routes->merge($routes);
         return $this;
     }
     /**
