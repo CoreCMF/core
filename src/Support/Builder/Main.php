@@ -7,12 +7,12 @@ use CoreCMF\Core\Support\Events\BuilderMain;
 class Main
 {
     private $type = 'main';
-    private $event;
-    private $routes = [];
-    private $config;
-    private $apiUrl;
-    private $topNavs;
-    private $menus;
+    public $event;
+    public $routes = [];
+    public $config;
+    public $apiUrl;
+    public $topNavs;
+    public $menus;
     private $response;
     /**
      * Create a new Skeleton Instance
