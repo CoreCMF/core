@@ -41,10 +41,12 @@ class Form
           'tags'       => '标签',
           'board  '    => '拖动排序',
   ];
+  private $layout = ['xs' => 24, 'sm' => 20, 'md' => 18, 'lg' => 16];
 
   public function __construct()
   {
       $this->data = collect([]);//初始化集合
+      $this->config['layout'] = $layout;
   }
   /**
    * [event 绑定form事件]
