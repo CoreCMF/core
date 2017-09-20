@@ -14,11 +14,9 @@ class Html
     private $callback;
     private $withCode = 200;
     private $cookie = null;
-    private $layout = ['xs' => 24, 'sm' => 20, 'md' => 18, 'lg' => 16];
 
     public function __construct()
     {
-        $this->config['layout'] = $layout;
     }
     /**
      * [item html项目]
