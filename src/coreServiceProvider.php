@@ -20,7 +20,7 @@ use CoreCMF\Core\Support\Prerequisite\PhpVersion;
 use CoreCMF\Core\Support\Prerequisite\WritablePath;
 use CoreCMF\Core\App\Models\Package;
 
-class coreServiceProvider extends ServiceProvider
+class CoreServiceProvider extends ServiceProvider
 {
     protected $commands = [
         \CoreCMF\Core\App\Console\InstallCommand::class,
