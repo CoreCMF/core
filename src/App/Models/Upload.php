@@ -72,7 +72,7 @@ class Upload extends Model
      * @var [type]
      */
     public static $fileRules = [
-        'file' => 'required|mimes:png,gif,jpeg,jpg,bmp',
+        'file' => 'required|mimes:doc,zip,rar',
     ];
     /**
      * [$fileMessages 验证文件错误返回信息].
@@ -125,6 +125,7 @@ class Upload extends Model
         if ($validator->fails()) {
             return [
                 'error' => true,
+                'type' => 'error',
                 'message' => $validator->messages()->first(),
                 'code' => 400,
             ];
@@ -137,21 +138,35 @@ class Upload extends Model
     /**
      * [imageUpload 上传文件模型].
      */
-    public function fileUpload($file,$path=null)
+    public function fileUpload($file,$path=null,$fileExtension=[])
     {
         /**
          * [$validator 验证文件格式].
          *
          * @var [type]
          */
-        $validator = Validator::make($file, $this->$fileRules, $this->$fileMessages);
-        if ($validator->fails()) {
-            return [
-                'error' => true,
-                'message' => $validator->messages()->first(),
-                'code' => 400,
-            ];
+        $extension = $file['file']->getClientOriginalExtension();
+        $validator = Validator::make($file, self::$fileRules, self::$fileMessages);
+        if ($fileExtension) {
+            if (!in_array($extension,$fileExtension)) {
+              return [
+                  'error' => true,
+                  'type' => 'error',
+                  'message' => $validator->messages()->first(),
+                  'code' => 400,
+              ];
+            }
+        }else{
+            if ($validator->fails()) {
+                return [
+                    'error' => true,
+                    'type' => 'error',
+                    'message' => $validator->messages()->first(),
+                    'code' => 400,
+                ];
+            }
         }
+
         $response = $this->upload($file, 'file'.DIRECTORY_SEPARATOR.$path);
 
         return $response;
@@ -273,11 +288,11 @@ class Upload extends Model
         $uploadObject = $this->where(['id' => $id])->first();
         if (!$uploadObject) {
             $uploadObject = (object) [
+                'code' => 404,
                 'name' => '未找到图片',
                 'url' => asset('storage/core/img/404.jpg'),
             ];
         }
-
         return $uploadObject;
     }
 }
