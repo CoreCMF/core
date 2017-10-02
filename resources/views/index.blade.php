@@ -22,6 +22,9 @@
         window.config = {
             apiUrl: '/api/{{$model}}/main',
             csrfToken:'{{ csrf_token() }}',
+@if (!empty($data))
+            data:{{ $data }},
+@endif
         }
     </script>
 </head>
