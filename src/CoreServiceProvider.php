@@ -109,6 +109,9 @@ class CoreServiceProvider extends ServiceProvider
         config(['auth.guards.api.driver' => 'passport']);
         //更改默认上传驱动为public
         config(['filesystems.default' => 'public']);
+        //队列默认驱动
+        config(['queue.default' => 'database']);
+        config(['queue.default.connections.database.table' => 'core_jobs']);
     }
     public function registerPassport()
     {
