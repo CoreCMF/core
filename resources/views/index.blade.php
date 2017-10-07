@@ -37,7 +37,6 @@
   {{ $html }}
   @endforeach
 @endif
-    <script src="{{ config('app.url') }}:6001/socket.io/socket.io.js"></script>
     <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/manifest.min.js') }}></script>
     <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/vendor.min.js') }}></script>
     <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/app.min.js') }}></script>
