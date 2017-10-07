@@ -91,12 +91,22 @@ class CoreServiceProvider extends ServiceProvider
 
     public function initService()
     {
+        $this->initConfig();
         //注册providers服务
         $this->registerProviders();
-        //设置user模型位置
-        config(['auth.providers.users.model' => App\Models\User::class]);
         //注册Passport
         $this->registerPassport();
+    }
+    /**
+     * [initConfig 初始化常用配置]
+     * @return [type] [description]
+     */
+    public function initConfig()
+    {
+        //设置user模型位置
+        config(['auth.providers.users.model' => App\Models\User::class]);
+        //修改auth api 驱动
+        config(['auth.guards.api.driver' => 'passport']);
         //更改默认上传驱动为public
         config(['filesystems.default' => 'public']);
     }
@@ -106,8 +116,6 @@ class CoreServiceProvider extends ServiceProvider
         Route::pushMiddlewareToGroup('web', \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class);
         //注册api认证的路由
         Passport::routes();
-        //修改auth api 驱动
-        config(['auth.guards.api.driver' => 'passport']);
     }
     /**
      * 注册引用服务
