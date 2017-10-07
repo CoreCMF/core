@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>LaravelVue</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LaravelVue</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ config('website.icon') }}">
     <!--[if lt IE 9]>
         <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -36,6 +37,7 @@
   {{ $html }}
   @endforeach
 @endif
+    <script src="{{ config('app.url') }}:6001/socket.io/socket.io.js"></script>
     <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/manifest.min.js') }}></script>
     <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/vendor.min.js') }}></script>
     <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/app.min.js') }}></script>
