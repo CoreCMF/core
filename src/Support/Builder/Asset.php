@@ -33,9 +33,9 @@ class Asset
       return $this;
   }
 
-  public function config($config)
+  public function config($key, $config)
   {
-      $this->config[] = $config;
+      $this->config[$key] = $config;
       return $this;
   }
   /**
@@ -48,7 +48,6 @@ class Asset
       $this->response['js']      = $this->js;
       $this->response['html']    = $this->html;
       $this->response['config']  = $this->config;
-
       return $this->response;
   }
 }
