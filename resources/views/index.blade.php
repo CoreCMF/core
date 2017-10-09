@@ -23,28 +23,30 @@
         window.config = {
             apiUrl: '/api/{{$model}}/main',
             csrfToken:'{{ csrf_token() }}',
-@if (!empty($data))
-            data:{!! $data !!},
+@if (!empty($config))
+            {!! $config !!},
 @endif
         }
     </script>
 </head>
 <body>
     <div id=app></div>
-    <!-- 渲染插件Html -->
+    <!-- 渲染插件Html Begin -->
 @if (!empty($resources['html']))
   @foreach ($resources['html'] as $html)
   {{ $html }}
   @endforeach
 @endif
-    <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/manifest.min.js') }}></script>
-    <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/vendor.min.js') }}></script>
-    <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/app.min.js') }}></script>
-    <!-- 渲染插件Js -->
+    <!-- 渲染插件Html End -->
+    <!-- 渲染插件Js Begin -->
 @if (!empty($resources['js']))
   @foreach ($resources['js'] as $js)
   <script type=text/javascript src={{ $js }}></script>
   @endforeach
 @endif
+  <!-- 渲染插件Js End -->
+    <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/manifest.min.js') }}></script>
+    <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/vendor.min.js') }}></script>
+    <script type=text/javascript src={{ asset('/vendor/'.$model.'/js/app.min.js') }}></script>
 </body>
 </html>

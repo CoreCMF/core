@@ -111,7 +111,7 @@ class CoreServiceProvider extends ServiceProvider
         config(['filesystems.default' => 'public']);
         //队列默认驱动
         config(['queue.default' => 'database']);
-        config(['queue.default.connections.database.table' => 'core_jobs']);
+        config(['queue.connections.database.table' => 'core_jobs']);
     }
     public function registerPassport()
     {
