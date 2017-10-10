@@ -23,9 +23,11 @@
         window.config = {
             apiUrl: '/api/{{$model}}/main',
             csrfToken:'{{ csrf_token() }}',
-            userId: {{ Auth::id() }},
-@if (!empty($data))
-            data:{!! $data !!},
+            userId: {{ empty(Auth::id())? 0: Auth::id()  }},
+@if (!empty($resources['config']))
+  @foreach ($resources['config'] as $key => $config)
+          {{ $key }}: {!! json_encode($config) !!},
+  @endforeach
 @endif
         }
     </script>
