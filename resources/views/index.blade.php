@@ -37,7 +37,7 @@
     <!-- 渲染插件Html Begin -->
 @if (!empty($resources['html']))
   @foreach ($resources['html'] as $html)
-  {{ $html }}
+  {!! $html !!}
   @endforeach
 @endif
     <!-- 渲染插件Html End -->
