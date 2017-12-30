@@ -48,6 +48,7 @@ class Browser
     private $_is_tablet = false;
     private $_is_robot = false;
     private $_is_facebook = false;
+    private $_is_wechat = false;
     private $_aol_version = '';
 
     const BROWSER_UNKNOWN = 'unknown';
@@ -171,6 +172,7 @@ class Browser
         $this->_is_tablet = false;
         $this->_is_robot = false;
         $this->_is_facebook = false;
+        $this->_is_wechat = false;
         $this->_aol_version = self::VERSION_UNKNOWN;
     }
 
@@ -300,7 +302,13 @@ class Browser
     {
         return $this->_is_facebook;
     }
-
+    /**
+     * 是否是微信客户端
+     */
+    public function isWechat()
+    {
+        return $this->_is_wechat;
+    }
     /**
      * Set the browser to be from AOL
      * @param $isAol
@@ -346,6 +354,14 @@ class Browser
         $this->_is_facebook = $value;
     }
 
+    /**
+     * Set the Browser to be a wechat request
+     * @param boolean $value is the browser a robot or not
+     */
+    protected function setWechat($value = true)
+    {
+        $this->_is_wechat = $value;
+    }
     /**
      * Get the user agent value in use to determine the browser
      * @return string The user agent from the HTTP header
@@ -1481,7 +1497,18 @@ class Browser
         }
         return false;
     }
-
+    /**
+     * Detect if URL is being loaded from internal Wechat browser
+     * @return boolean True if it detects internal Wechat browser otherwise false
+     */
+    protected function checkForWechat()
+    {
+        if (stristr($this->_agent, 'MicroMessenger')) {
+            $this->setWechat(true);
+            return true;
+        }
+        return false;
+    }
     /**
      * Detect Version for the Safari browser on iOS devices
      * @return boolean True if it detects the version correctly otherwise false
@@ -1525,6 +1552,7 @@ class Browser
             $this->getSafariVersionOnIos();
             $this->getChromeVersionOnIos();
             $this->checkForFacebookIos();
+            $this->checkForWechat();
             $this->setMobile(true);
             return true;
         }
@@ -1543,6 +1571,7 @@ class Browser
             $this->getSafariVersionOnIos();
             $this->getChromeVersionOnIos();
             $this->checkForFacebookIos();
+            $this->checkForWechat();
             $this->setTablet(true);
             return true;
         }
@@ -1561,6 +1590,7 @@ class Browser
             $this->getSafariVersionOnIos();
             $this->getChromeVersionOnIos();
             $this->checkForFacebookIos();
+            $this->checkForWechat();
             $this->setMobile(true);
             return true;
         }
