@@ -27,11 +27,11 @@ class Package extends Model
     public function providers()
     {
         if (Schema::hasTable('core_packages')) {
-            $Packages = $this->where('status',1)->get();
+            $Packages = $this->where('status', 1)->get();
             return $Packages->map(function ($package) {
-                return $package->serviceProvider;
+                return $package->provider;
             })->toArray();
-        }else{
+        } else {
             return [];
         }
     }
