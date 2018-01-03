@@ -29,7 +29,10 @@ class Manage
     public function updatePackage()
     {
         $packages = $this->getPackage();
-        print_R($packages);
+        foreach ($packages as $package) {
+            $package['providers'] = serialize($package['providers']);
+            $this->packageModel->create($package);
+        }
     }
     /**
      * [getPackage 获取corecmf包扩展信息]

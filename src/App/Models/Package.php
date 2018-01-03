@@ -9,7 +9,7 @@ class Package extends Model
 {
     public $table = 'core_packages';
 
-    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'serviceProvider','uninstall'];
+    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'providers','install','uninstall'];
     /**
      * [checkName 检查模块是否存在]
      * @param  [type] $name [description]
@@ -28,9 +28,9 @@ class Package extends Model
     {
         if (Schema::hasTable('core_packages')) {
             $Packages = $this->where('status', 1)->get();
-            return $Packages->map(function ($package) {
-                return $package->providers;
-            })->toArray();
+            return array_collapse($Packages->map(function ($package) {
+                return unserialize($package->providers);
+            })->toArray());
         } else {
             return [];
         }
