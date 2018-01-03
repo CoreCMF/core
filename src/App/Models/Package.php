@@ -29,7 +29,7 @@ class Package extends Model
         if (Schema::hasTable('core_packages')) {
             $Packages = $this->where('status', 1)->get();
             return $Packages->map(function ($package) {
-                return $package->provider;
+                return $package->providers;
             })->toArray();
         } else {
             return [];
