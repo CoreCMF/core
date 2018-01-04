@@ -30,8 +30,8 @@ class Manage
     {
         $packages = $this->getPackage();
         foreach ($packages as $package) {
-            $package['providers'] = serialize($package['providers']);
-            $this->packageModel->create($package);
+            $package['providers'] = json_encode($package['providers']);
+            $this->packageModel->firstOrCreate(['name' => $package['name']], $package);//不存在时创建
         }
     }
     /**
