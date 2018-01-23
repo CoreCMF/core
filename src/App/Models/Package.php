@@ -10,6 +10,13 @@ class Package extends Model
     public $table = 'core_packages';
 
     protected $fillable = ['name', 'title', 'description', 'author', 'version', 'providers','install','uninstall'];
+
+    public $status = [
+        'uninstall' => '未安装',
+        'install' => '已安装',
+        'open'  => '开启',
+        'off'  => '关闭',
+    ];
     /**
      * [checkName 检查模块是否存在]
      * @param  [type] $name [description]
