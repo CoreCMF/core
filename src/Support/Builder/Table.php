@@ -111,15 +111,15 @@ class Table
     public function topButton($topButton)
     {
         if (!empty($topButton['buttonType'])) {
-            $topButton = array_merge($topButton, $this->buttonProperty[$topButton['buttonType']]);
+            $topButton = array_merge($this->buttonProperty[$topButton['buttonType']], $topButton);
         }
         $this->topButton[]   = $topButton;   //设置 table rightButton 表格右侧按钮
         return $this;
     }
     public function rightButton($rightButton)
     {
-        if (!empty($topButton['buttonType'])) {
-            $topButton = array_merge($topButton, $this->buttonProperty[$topButton['buttonType']]);
+        if (!empty($rightButton['buttonType'])) {
+            $rightButton = array_merge($this->buttonProperty[$rightButton['buttonType']], $rightButton);
         }
         $this->rightButton[]   = $rightButton;   //设置 table rightButton 表格右侧按钮
         return $this;
