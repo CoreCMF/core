@@ -23,7 +23,7 @@ class CorePackagesTable extends Migration
             $table->json('providers')              ->comment('服务提供者');
             $table->string('install', 64)          ->comment('安装artisan');
             $table->string('uninstall', 64)        ->comment('卸载artisan');
-            $table->tinyInteger('status')         ->comment('状态')->default(-1);
+            $table->string('status', 16)          ->comment('状态')->default('uninstall');
             $table->bigInteger('sort')            ->comment('排序')->unsigned()->default(0);
             $table->timestamps();
         });
