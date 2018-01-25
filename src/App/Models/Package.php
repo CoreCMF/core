@@ -11,23 +11,6 @@ class Package extends Model
 
     protected $fillable = ['name', 'title', 'description', 'author', 'version', 'providers','install','uninstall'];
 
-    public $status = [
-        'uninstall' => [
-            'type' => 'danger',
-            'icon' => 'fa fa-trash',
-            'title' => '未安装'
-        ],
-        'open'  => [
-            'type' => 'success',
-            'icon' => 'fa fa-check',
-            'title' => '开启'
-        ],
-        'close'  => [
-            'type' => 'warning',
-            'icon' => 'fa fa-power-off',
-            'title' => '关闭'
-        ],
-    ];
     /**
      * [checkName 检查模块是否存在]
      * @param  [type] $name [description]
