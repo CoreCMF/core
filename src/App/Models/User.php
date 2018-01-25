@@ -13,22 +13,6 @@ class User extends Authenticatable
 
     public $table = 'core_users';
     /**
-     * [public 状态配置]
-     * @var [type]
-     */
-    public $status = [
-        [
-            'type' => 'success',
-            'icon' => 'fa fa-check',
-            'title' => '正常'
-        ],
-        [
-            'type' => 'warning',
-            'icon' => 'fa fa-power-off',
-            'title' => '禁用'
-        ],
-    ];  
-    /**
      * The attributes that are mass assignable.
      *
      * @var array

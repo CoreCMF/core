@@ -21,14 +21,14 @@ class CoreUsersTable extends Migration
             $table->string('nickname')          ->comment('昵称')    ->nullable();
             $table->string('password')          ->comment('用户密码');
             $table->rememberToken()             ->comment('记住用户令牌');
-            $table->tinyInteger('status')       ->comment('状态')->default(1);
+            $table->string('status', 16)        ->comment('状态')->default('open');
             $table->timestamps();
         });
         Schema::create('core_user_infos', function (Blueprint $table) {
             $table->increments('user_id')->unsigned();
             $table->integer('avatar')           ->comment('用户头像')->unsigned()->default(1);
             $table->integer('integral')         ->comment('用户积分')->unsigned()->default(0);
-            $table->decimal('money',11, 2)      ->comment('用户余额')->unsigned()->default(0);
+            $table->decimal('money', 11, 2)      ->comment('用户余额')->unsigned()->default(0);
             $table->foreign('user_id')->references('id')->on('core_users')
                 ->onUpdate('cascade')->onDelete('cascade');
         });

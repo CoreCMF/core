@@ -75,6 +75,18 @@ class Table
           'method'=>'warning'
         ],
     ];
+    public $statusConfig = [
+        'open' => [
+            'type' => 'success',
+            'icon' => 'fa fa-check',
+            'title' => '正常'
+        ],
+        'close' => [
+            'type' => 'warning',
+            'icon' => 'fa fa-power-off',
+            'title' => '禁用'
+        ],
+    ];
     /**
      * Create a new Skeleton Instance
      */
@@ -118,6 +130,11 @@ class Table
     }
     public function column($column)
     {
+        if ($column['prop']=='status') {
+            if (empty($column['config'])) {
+                $column['config'] = $this->statusConfig;
+            }
+        }
         $this->column[] = $column;   //设置 tableColumn 表格柱
         return $this;
     }

@@ -246,8 +246,29 @@ class Model
     {
         $input = $this->request->all();
         foreach ($input as $id => $value) {
-            $response = $model->find($id)->forceDelete();
+            if ($value == 'delete') {
+                $response = $model->find($id)->forceDelete();
+            }
         }
         return true;
+    }
+    /**
+     * [status 批量更改数状态]
+     * @param    [type]         $model [description]
+     * @return   [type]                [description]
+     * @Author   bigrocs
+     * @QQ       532388887
+     * @Email    bigrocs@qq.com
+     * @DateTime 2018-01-25
+     */
+    public function status($model)
+    {
+        $input = $this->request->all();
+        foreach ($input as $id => $value) {
+            if ($value == 'close' || $value == 'open') {
+                $response = $model->where('id', '=', $id)->update(['status' => $value]);
+            }
+        }
+        return $value;
     }
 }
