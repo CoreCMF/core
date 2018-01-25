@@ -68,79 +68,30 @@ class Manage
      * @param  [type] $config [description]
      * @return [type]         [description]
      */
-    public function install($config)
+    public function install($id)
     {
-        $check = $this->checkConfig($config);
-        if ($check === true) {
-            if (empty($this->packageModel->checkName($config['name']))) {
-                $this->packageModel->create($config);
-                app()->register($config['serviceProvider']);//注册服务
-                Artisan::call($config['install']);//通过artisan命令安装模块
-                return [
-                          'message'   => '模块安装成功.',
-                          'type'      => 'success',
-                      ];
-            } else {
-                return [
-                          'message'   => '模块插件已存在请勿重复安装.',
-                          'type'      => 'warning',
-                      ];
-            }
-        } else {
-            return [
-                      'message'   => $check,
-                      'type'      => 'warning',
-                  ];
+        $package = $this->packageModel->find($id);
+        foreach (json_decode($package->providers) as $provider) {
+            app()->register($provider);//注册服务
         }
-    }
-    public function uninstall($artisan)
-    {
-        return  Artisan::call($artisan);//通过artisan命令卸载模块
+        Artisan::call($package->install);//通过artisan命令安装模块
+        $package->status = 'close';
+        return $package->save();
     }
     /**
-     * [namespaceInstall 通过命名空间安装模块]
-     * @param  [type] $namespace [description]
-     * @return [type]            [description]
+     * [uninstall 卸载安装包]
+     * @param    [type]         $package [description]
+     * @return   [type]                  [description]
+     * @Author   bigrocs
+     * @QQ       532388887
+     * @Email    bigrocs@qq.com
+     * @DateTime 2018-01-25
      */
-    public function namespaceInstall($namespace)
+    public function uninstall($package)
     {
-        $namespaceDire = $this->psr4->namespaceDir($namespace);
-        if ($namespaceDire) {
-            $configDir = $namespaceDire.'/Config/config.php';
-            if (is_file($configDir)) {
-                $config = include $configDir;
-                return $this->install($config);
-            } else {
-                return [
-                            'message'   => '未能找到插件配置文件!请确认您的插件包是否正确。',
-                            'type'      => 'error',
-                        ];
-            }
-        } else {
-            return [
-                        'message'   => '未能找到插件命名空间!请确认您输入的命名空间是否正确。',
-                        'type'      => 'error',
-                    ];
+        foreach (json_decode($package->providers) as $provider) {
+            app()->register($provider);//注册服务
         }
-    }
-    /**
-     * [checkConfig 检查配置文件参数]
-     * @param  [type] $config [description]
-     * @return [type]         [description]
-     */
-    public function checkConfig($config)
-    {
-        $status = false;
-        $message = '配置文件缺少下面参数';
-        $keys = ['name','title','description','author','version','serviceProvider','install','uninstall'];
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $config)) {
-                $status = true;
-            } else {
-                $message .= ' \''.$key.'\'';
-                $status = false;
-            }
-        }
-        return $status? true: $message;
+        return  Artisan::call($package->uninstall);//通过artisan命令卸载模块
     }
 }
