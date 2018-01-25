@@ -71,12 +71,16 @@ class Manage
     public function install($id)
     {
         $package = $this->packageModel->find($id);
-        foreach (json_decode($package->providers) as $provider) {
-            app()->register($provider);//注册服务
+        if ($package->status == 'uninstall') {
+            foreach (json_decode($package->providers) as $provider) {
+                app()->register($provider);//注册服务
+            }
+            Artisan::call($package->install);//通过artisan命令安装模块
+            $package->status = 'close';
+            return $package->save();
+        } else {
+            return false;
         }
-        Artisan::call($package->install);//通过artisan命令安装模块
-        $package->status = 'close';
-        return $package->save();
     }
     /**
      * [uninstall 卸载安装包]
