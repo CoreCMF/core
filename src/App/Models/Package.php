@@ -22,7 +22,7 @@ class Package extends Model
             'icon' => 'fa fa-check',
             'title' => '开启'
         ],
-        'off'  => [
+        'close'  => [
             'type' => 'warning',
             'icon' => 'fa fa-power-off',
             'title' => '关闭'
@@ -45,7 +45,7 @@ class Package extends Model
     public function providers()
     {
         if (Schema::hasTable('core_packages')) {
-            $packages = $this->where('status', 1)->get();
+            $packages = $this->where('status', 'open')->get();
             return array_collapse($packages->map(function ($package) {
                 return json_decode($package->providers);
             })->toArray());

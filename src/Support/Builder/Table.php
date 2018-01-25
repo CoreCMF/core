@@ -23,43 +23,56 @@ class Table
           'title'=>'新增',
           'icon'=>'fa fa-plus',
           'type'=>'primary',
-          'method'=>'default'
+          'method'=>'dialog'
         ],
         'edit'=>[
           'title'=>'编辑',
           'icon'=>'fa fa-edit',
           'type'=>'info',
-          'method'=>'default'
+          'method'=>'dialog'
         ],
         'resume'=>[
           'title'=>'启用',
           'icon'=>'fa fa-check',
           'type'=>'success',
-          'method'=>'resume'
+          'method'=>'default'
         ],
         'forbid'=>[
           'title'=>'禁用',
           'icon'=>'fa fa-ban',
           'type'=>'warning',
-          'method'=>'forbid'
+          'method'=>'default'
+        ],
+        'open'=>[
+          'title'=>'开启',
+          'icon'=>'fa fa-check',
+          'type'=>'success',
+          'method'=>'default'
+        ],
+        'close'=>[
+          'title'=>'关闭',
+          'icon'=>'fa fa-ban',
+          'type'=>'warning',
+          'method'=>'default'
         ],
         'display'=>[
           'title'=>'显示',
           'icon'=>'fa fa-check',
           'type'=>'success',
-          'method'=>'display'
+          'method'=>'default'
         ],
         'hide'=>[
           'title'=>'隐藏',
           'icon'=>'fa fa-eye-slash',
           'type'=>'warning',
-          'method'=>'hide'
+          'method'=>'default'
         ],
         'delete'=>[
           'title'=>'删除',
           'icon'=>'fa fa-trash',
           'type'=>'danger',
-          'method'=>'delete'
+          'warning'=>'此操作将永久删除此数据, 是否继续?',
+          'method'=>'warning'
         ],
     ];
     /**
