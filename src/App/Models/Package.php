@@ -9,7 +9,7 @@ class Package extends Model
 {
     public $table = 'core_packages';
 
-    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'providers','install','uninstall'];
+    protected $fillable = ['name', 'title', 'description', 'author', 'version', 'providers','aliases','install','uninstall'];
 
     public $statusConfig= [
         'uninstall' => [

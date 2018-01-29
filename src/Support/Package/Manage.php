@@ -31,7 +31,9 @@ class Manage
         $packages = $this->getPackage();
         foreach ($packages as $package) {
             $package['providers'] = json_encode($package['providers']);
-            $package['aliases'] = json_encode($package['aliases']);
+            if (!empty($package['aliases'])) {
+                $package['aliases'] = json_encode($package['aliases']);
+            }
             $this->packageModel->firstOrCreate(['name' => $package['name']], $package);//不存在时创建
         }
     }
