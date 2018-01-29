@@ -4,6 +4,7 @@ namespace CoreCMF\Core;
 
 use Route;
 use Laravel\Passport\Passport;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -94,6 +95,8 @@ class CoreServiceProvider extends ServiceProvider
         $this->initConfig();
         //注册providers服务
         $this->registerProviders();
+        // 注册门面
+        $this->registerAliases();
         //注册Passport
         $this->registerPassport();
     }
@@ -134,6 +137,23 @@ class CoreServiceProvider extends ServiceProvider
         }
         foreach ($providers as $provider) {
             $this->app->register($provider);
+        }
+    }
+    /**
+     * [registerAliases 注册门面]
+     * @return   [type]         [description]
+     * @Author   bigrocs
+     * @QQ       532388887
+     * @Email    bigrocs@qq.com
+     * @DateTime 2018-01-29
+     */
+    public function registerAliases()
+    {
+        $package = new Package();
+        $aliases = $package->providers();
+        $loader = AliasLoader::getInstance();
+        foreach ($aliases as $key => $alias) {
+            $loader->alias($key, $alias);
         }
     }
     //注册中间件

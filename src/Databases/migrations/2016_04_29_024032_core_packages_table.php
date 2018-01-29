@@ -20,7 +20,8 @@ class CorePackagesTable extends Migration
             $table->text('description')           ->comment('描述')->nullable();
             $table->string('author', 32)           ->comment('作者')->nullable();
             $table->string('version', 8)           ->comment('版本')->nullable();
-            $table->json('providers')              ->comment('服务提供者');
+            $table->json('providers')              ->comment('服务提供者注册')->nullable();
+            $table->json('aliases')                ->comment('门面注册')->nullable();
             $table->string('install', 64)          ->comment('安装artisan');
             $table->string('uninstall', 64)        ->comment('卸载artisan');
             $table->string('status', 16)          ->comment('状态')->default('uninstall');

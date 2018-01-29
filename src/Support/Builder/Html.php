@@ -23,15 +23,18 @@ class Html
      * @param  [type] $item [description]
      * @return [type]       [description]
      */
-    public function item($item){
+    public function item($item)
+    {
         $this->items[] = $item->response();
         return $this;
     }
-    public function main($main){
+    public function main($main)
+    {
         $this->main = $main->response();
         return $this;
     }
-    public function config($key,$value){
+    public function config($key, $value)
+    {
         $this->config[$key] = $value;
         return $this;
     }
@@ -40,7 +43,8 @@ class Html
      * @param  [type] $title [description]
      * @return [type]        [description]
      */
-    public function title($title){
+    public function title($title)
+    {
         $this->title   = $title;
         return $this;
     }
@@ -48,7 +52,8 @@ class Html
      * [message 提示信息]
      * @param  [type] $message [description]
      */
-    public function message($message){
+    public function message($message)
+    {
         $this->message   = $message;
         return $this;
     }
@@ -56,7 +61,8 @@ class Html
      * [auth 用户认证信息]
      * @param  [type] $auth [description]
      */
-    public function auth($auth){
+    public function auth($auth)
+    {
         $this->auth   = $auth;
         return $this;
     }
@@ -64,7 +70,8 @@ class Html
      * [callback 回调信息]
      * @param  [type] $callback [description]
      */
-    public function callback($callback){
+    public function callback($callback)
+    {
         $this->callback   = $callback;
         return $this;
     }
@@ -72,11 +79,13 @@ class Html
      * [withCode 返回代码状态]
      * @param  [type] $withCode [description]
      */
-    public function withCode($withCode){
+    public function withCode($withCode)
+    {
         $this->withCode   = $withCode;
         return $this;
     }
-    public function cookie($cookie){
+    public function cookie($cookie)
+    {
         $this->cookie   = $cookie;
         return $this;
     }

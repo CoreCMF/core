@@ -53,4 +53,23 @@ class Package extends Model
             return [];
         }
     }
+    /**
+     * [aliases 获取门面类注册文件]
+     * @return   [type]         [description]
+     * @Author   bigrocs
+     * @QQ       532388887
+     * @Email    bigrocs@qq.com
+     * @DateTime 2018-01-29
+     */
+    public function aliases()
+    {
+        if (Schema::hasTable('core_packages')) {
+            $packages = $this->where('status', 'open')->get();
+            return array_collapse($packages->map(function ($package) {
+                return json_decode($package->aliases);
+            })->toArray());
+        } else {
+            return [];
+        }
+    }
 }
