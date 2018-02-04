@@ -46,9 +46,9 @@ class Package extends Model
     {
         if (Schema::hasTable('core_packages')) {
             $packages = $this->where('status', 'open')->get();
-            return array_collapse($packages->map(function ($package) {
-                return json_decode($package->providers);
-            })->toArray());
+            return $packages->map(function ($package) {
+                return json_decode($package->providers, true);
+            })->collapse()->toArray();
         } else {
             return [];
         }
@@ -65,9 +65,9 @@ class Package extends Model
     {
         if (Schema::hasTable('core_packages')) {
             $packages = $this->where('status', 'open')->get();
-            return array_collapse($packages->map(function ($package) {
-                return json_decode($package->aliases);
-            })->toArray());
+            return $packages->map(function ($package) {
+                return json_decode($package->aliases, true);
+            })->collapse()->toArray();
         } else {
             return [];
         }

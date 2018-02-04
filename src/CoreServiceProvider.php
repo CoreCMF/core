@@ -150,7 +150,7 @@ class CoreServiceProvider extends ServiceProvider
     public function registerAliases()
     {
         $package = new Package();
-        $aliases = $package->providers();
+        $aliases = $package->aliases();
         $loader = AliasLoader::getInstance();
         foreach ($aliases as $key => $alias) {
             $loader->alias($key, $alias);
