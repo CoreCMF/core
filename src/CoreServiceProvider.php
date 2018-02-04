@@ -50,6 +50,7 @@ class CoreServiceProvider extends ServiceProvider
         //设置发布前端文件
         $this->publishes([
             __DIR__.'/../resources/storage/' => public_path('storage'),
+            __DIR__.'/../resources/js/' => public_path('js'),
         ], 'core');
         $this->initService();
     }
