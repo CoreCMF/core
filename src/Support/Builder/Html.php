@@ -2,9 +2,12 @@
 
 namespace CoreCMF\Core\Support\Builder;
 
+use CoreCMF\Core\Support\Events\BuilderHtml;
+
 class Html
 {
     private $items;
+    private $event;
     private $main;
     private $title;
     private $config;
@@ -17,6 +20,16 @@ class Html
 
     public function __construct()
     {
+    }
+    /**
+     * [event 绑定fMain事件]
+     * @param  [type] $event [事件]
+     * @return [type]        [description]
+     */
+    public function event($event)
+    {
+        $this->event = $event;
+        return $this;
     }
     /**
      * [item html项目]
@@ -95,6 +108,8 @@ class Html
      */
     public function response()
     {
+        event(new BuilderHtml($this)); //分发事件
+
         $response['title']   = $this->title;
         $response['items']   = $this->items;
         $response['main']    = $this->main;
