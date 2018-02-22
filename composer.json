@@ -7,7 +7,7 @@
         "core"
     ],
     "homepage": "https://github.com/CoreCMF/core",
-    "license": "core",
+    "license": "MIT",
     "authors": [
         {
             "name": "bigrocs",
