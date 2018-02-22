@@ -17,7 +17,6 @@
         }
     ],
     "require": {
-        "php" : "~5.6|~7.0",
         "laravel/passport": "^4.0",
         "laravel/tinker": "~1.0",
         "zizaco/entrust": "^1.8"
