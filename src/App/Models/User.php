@@ -62,7 +62,7 @@ class User extends Authenticatable
     /**
      * [findForUser 根据用户名或者邮箱、手机找到用户信息]
      */
-    public function findForPassport($username)
+    public function findForUser($username)
     {
         return $this->where('name', $username)
                     ->orwhere('email', $username)
@@ -72,15 +72,15 @@ class User extends Authenticatable
     public function check($request)
     {
         if ($request->name) {
-            $user = $this->findForPassport($request->name);
+            $user = $this->findForUser($request->name);
             $callback = '用户名已存在!';
         }
         if ($request->email) {
-            $user = $this->findForPassport($request->email);
+            $user = $this->findForUser($request->email);
             $callback = '用户邮箱已存在!';
         }
         if ($request->mobile) {
-            $user = $this->findForPassport($request->mobile);
+            $user = $this->findForUser($request->mobile);
             $callback = '用户手机已存在!';
         }
         if ($user) {
@@ -93,5 +93,18 @@ class User extends Authenticatable
             }
         }
         return;
+    }
+    /**
+     * [findForPassport Passport 使用方法]
+     * @param    [type]         $username [description]
+     * @return   [type]                   [description]
+     * @Author   bigrocs
+     * @QQ       532388887
+     * @Email    bigrocs@qq.com
+     * @DateTime 2018-03-09
+     */
+    public function findForPassport($username)
+    {
+        return $this->findForUser($username;
     }
 }
