@@ -105,6 +105,6 @@ class User extends Authenticatable
      */
     public function findForPassport($username)
     {
-        return $this->findForUser($username;
+        return $this->findForUser($username);
     }
 }
