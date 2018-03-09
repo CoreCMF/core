@@ -119,8 +119,6 @@ class CoreServiceProvider extends ServiceProvider
     }
     public function registerPassport()
     {
-        // 添加Passport中间件
-        Route::pushMiddlewareToGroup('web', \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class);
         //注册api认证的路由
         Passport::routes();
     }

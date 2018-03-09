@@ -37,7 +37,7 @@ class PassportClient extends Model
                ],
             ]);
         } catch (ClientException $e) {
-            return ['statusCode' => $e->getResponse()->getStatusCode()];//返回错误代码
+            return ['status_code' => $e->getResponse()->getStatusCode()];//返回错误代码
         }
         return json_decode((string)$response->getBody(), true);
     }
