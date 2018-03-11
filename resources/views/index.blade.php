@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ config('website.icon') }}">
     <!--[if lt IE 9]>
         <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -22,7 +21,6 @@
     <script>
         window.config = {
             apiUrl: '/api/{{$model}}/main',
-            csrfToken:'{{ csrf_token() }}',
             userId: {{ empty(Auth::id())? 0: Auth::id()  }},
 @if (!empty($resources['config']))
   @foreach ($resources['config'] as $key => $config)
