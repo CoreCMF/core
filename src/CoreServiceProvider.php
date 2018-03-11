@@ -100,6 +100,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->registerAliases();
         //注册Passport
         $this->registerPassport();
+        $this->registerMiddleware();
     }
     /**
      * [initConfig 初始化常用配置]
@@ -121,6 +122,19 @@ class CoreServiceProvider extends ServiceProvider
     {
         //注册api认证的路由
         Passport::routes();
+    }
+    /**
+     * [registerMiddleware 注册中间件]
+     * @return   [type]         [description]
+     * @Author   bigrocs
+     * @QQ       532388887
+     * @Email    bigrocs@qq.com
+     * @DateTime 2018-03-11
+     */
+    public function registerMiddleware()
+    {
+        //Session中间件
+        Route::pushMiddlewareToGroup('api', \Illuminate\Session\Middleware\StartSession::class);
     }
     /**
      * 注册引用服务
