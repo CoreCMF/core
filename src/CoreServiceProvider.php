@@ -120,8 +120,9 @@ class CoreServiceProvider extends ServiceProvider
     }
     public function registerPassport()
     {
-        //注册api认证的路由
-        Passport::routes();
+        Passport::routes();//注册api认证的路由
+        Passport::tokensExpireIn(now()->addDays(7)); //默认七天
+        Passport::refreshTokensExpireIn(now()->addDays(30));//默认三十天
     }
     /**
      * [registerMiddleware 注册中间件]
