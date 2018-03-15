@@ -4,6 +4,7 @@ namespace CoreCMF\Core\Support\Package;
 
 use Artisan;
 use CoreCMF\Core\App\Models\Package;
+use CoreCMF\Core\App\Models\PackageConfig;
 use CoreCMF\Core\Support\Package\Psr4;
 use Illuminate\Filesystem\Filesystem;
 
@@ -11,11 +12,13 @@ class Manage
 {
     protected $psr4;
     protected $packageModel;
+    protected $packageConfigModel;
     protected $files;
-    public function __construct(Psr4 $psr4, Package $packageRepo, Filesystem $files)
+    public function __construct(Psr4 $psr4, Package $packageRepo, PackageConfig $packageConfigRepo, Filesystem $files)
     {
         $this->psr4 = $psr4;
         $this->packageModel = $packageRepo;
+        $this->packageConfigModel = $packageConfigRepo;
         $this->files = $files;
     }
     /**
@@ -99,6 +102,8 @@ class Manage
         foreach (json_decode($package->providers) as $provider) {
             app()->register($provider);//注册服务
         }
+        //删除包配置数据
+        $this->packageConfigModel->uninstallPackage($package->name);
         return  Artisan::call($package->uninstall);//通过artisan命令卸载模块
     }
 }
