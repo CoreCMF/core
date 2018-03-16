@@ -2,7 +2,6 @@
 
 namespace CoreCMF\Core\Support\Validator;
 
-
 class Rules
 {
     public $mobile;
@@ -17,25 +16,22 @@ class Rules
     }
     public function asyncField($url, $postData)
     {
-        return "
-              axios({
-                method: 'post',
-                url:'".$url."',
-                data: ".$postData."
-              }).then(function(Response){
-                callback();
-              })
-              .catch(function (error) {
-                callback(error.response.data.callback);
-              });
-          ";
+        return '
+            let apiUrl = \''.$url.'\'
+            let postData = '.$postData.'
+            let thenFunction = (Response) => {
+              callback();
+            }
+            let catchFunction = (error) => {
+              callback(error.response.data.callback);
+            }
+            this.$store.dispatch(\'getData\',{ apiUrl, postData, thenFunction, catchFunction })
+          ';
     }
     public function mobile(
       $empty = '请输入手机号码',
       $error = '请输入正确的手机号码'
-    )
-    {
-
+    ) {
         return $this->mobile = "
             (rule, value, callback) => {
                 if (value == undefined) {
@@ -54,8 +50,7 @@ class Rules
       $begin = 6,
       $end = 16,
       $empty = '请输入密码'
-    )
-    {
+    ) {
         return $this->password = "
             (rule, value, callback) => {
                 if (value == undefined) {
@@ -74,8 +69,7 @@ class Rules
     public function checkPassword(
       $password = 'password',
       $empty = '请再次输入密码'
-    )
-    {
+    ) {
         return $this->checkPassword = "
             (rule, value, callback) => {
                 if (value == undefined) {
