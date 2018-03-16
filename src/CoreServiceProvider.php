@@ -51,6 +51,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/storage/' => public_path('storage'),
             __DIR__.'/../resources/js/' => public_path('js'),
+            __DIR__.'/../resources/css/' => public_path('css'),
         ], 'core');
         $this->initService();
     }
