@@ -18,7 +18,6 @@ class CorePackageConfigsTable extends Migration
             $table->string('name', 64)             ->comment('扩展包名称');
             $table->string('key', 128)             ->comment('配置键值');
             $table->json('value')                  ->comment('配置内容')->nullable();
-            $table->string('status', 16)           ->comment('状态')->default('close');
             $table->timestamps();
         });
     }
