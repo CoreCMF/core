@@ -72,4 +72,12 @@ class Package extends Model
             return [];
         }
     }
+    /**
+     * 是否安装
+     */
+    public function isInstall($name)
+    {
+        $package = $this->where('name', $name)->where('status', '!=', 'uninstall')->first();
+        return $package? true: false;
+    }
 }
