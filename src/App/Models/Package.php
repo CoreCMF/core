@@ -77,7 +77,6 @@ class Package extends Model
      */
     public function isInstall($name)
     {
-        $package = $this->where('name', $name)->where('status', '!=', 'uninstall')->first();
-        return $package? true: false;
+        return $this->where('name', $name)->where('status', '!=', 'uninstall')->first()? true: false;
     }
 }
